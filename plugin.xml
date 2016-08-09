@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="navtureapps-proximiio" version="0.4.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>proximiio</name>
+  	<asset src="www/proximiio.js" target="js/proximiio.js"/>
+
+	<js-module name="proximiio" src="www/proximiio.js">
+		<clobbers target="proximiio" />
+	</js-module>
+
+	<platform name="ios">
+		<config-file parent="/widget" target="config.xml">
+			<feature name="ProximiioCordova">
+    			<param name="ios-package" value="proximiio" />
+			</feature>
+		</config-file>
+
+	  <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+			<string>Configure this string in the plist!</string>
+	  </config-file>
+
+		<config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
+			<string>Configure this string in the plist!</string>
+		</config-file>
+
+    <config-file target="*-Info.plist" parent="UIBackgroundModes">
+			<key>UIBackgroundModes</key>
+				<array>
+				<string>location</string>
+			</array>
+    </config-file>
+
+    <source-file src="src/ios/proximiio.m" />
+    <framework src="src/ios/Proximiio.framework" custom="true" embed="true"/>
+		<hook type="after_platform_add" src="hooks/addEmbedded.js" />
+		<framework src="CoreLocation.framework" />
+		<framework src="CoreBluetooth.framework" />
+		<framework src="SystemConfiguration.framework" />
+		<framework src="Security.framework" />
+		<framework src="CoreMotion.framework" />
+		<framework src="CFNetwork.framework" />
+		<framework src="libicucore.dylib" />
+		<framework src="libz.dylib" />
+		<framework src="libc++.dylib" />
+	</platform>
+
+	<platform name="android">
+
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="ProximiioCordova">
+				<param name="android-package" value="com.navtureapps.cordovaplugin.ProximiioCordova"/>
+			</feature>
+		</config-file>
+
+		<config-file target="res/xml/config.xml" parent="plugins">
+		    <plugin name="ProximiioCordova" value="com.navtureapps.cordovaplugin.ProximiioCordova" />
+		</config-file>
+
+		<source-file src="src/android/ProximiioCordova.java" target-dir="src/com/navtureapps/cordovaplugin"/>
+                <source-file src="src/android/PermissionHelper.java" target-dir="src/com/navtureapps/cordovaplugin"/>
+
+		<framework src="com.android.support:appcompat-v7:23.+"/>
+		<framework src="com.android.support:design:23.+"/>
+		<framework src="com.google.android.gms:play-services-location:9.+" />
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+
+		<config-file target="AndroidManifest.xml" parent="/manifest">
+			<uses-permission android:name="android.permission.BLUETOOTH" />
+			<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+			<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+			<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+			<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+			<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+			<uses-permission android:name="android.permission.WAKE_LOCK" />
+
+			<uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
+			<uses-feature android:name="android.hardware.sensor.compass" android:required="false" />
+			<uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
+			<uses-feature android:name="android.hardware.wifi" android:required="true" />
+			<uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
+
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<service android:name="io.proximi.proximiiolibrary.ProximiioService"
+					 android:label="ProximiioService"
+					 android:exported="false"/>
+
+			<service android:name="com.indooratlas.android.sdk.IALocationService"
+					 android:label="IALocationService"
+					 android:exported="false"/>
+
+			<meta-data
+					android:name="com.google.android.gms.version"
+					android:value="@integer/google_play_services_version" />
+		</config-file>
+
+
+	</platform>
+
+</plugin>

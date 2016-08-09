@@ -1,0 +1,6 @@
+framework module Proximiio {
+  umbrella header "Proximiio.h"
+
+  export *
+  module * { export * }
+}
