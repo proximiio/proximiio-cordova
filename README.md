@@ -174,7 +174,7 @@ floorChangedCallback is triggered when Proximio.io SDK detects a floor change;
 sets Proximi.io SDK to handle output Push messages automatically
 
 ```javascript
-  proximiio.setHandlePush(true);
+  proximiio.handlePush(true);
 ```
 
 ## errorCallback   
