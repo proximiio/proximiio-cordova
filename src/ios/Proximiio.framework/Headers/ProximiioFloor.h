@@ -24,6 +24,12 @@
 @property (nonatomic, strong) NSString *floorPlanImageURL;
 @property (nonatomic, strong) NSNumber *floorNumber;
 @property (nonatomic, strong) NSNumber *level;
-
+@property BOOL floorPlanFlipped;
+@property float floorPlanWidth;
+@property float floorPlanHeight;
+@property float floorPlanHeading;
+@property float floorPlanSideWidth;
+@property float floorPlanSideHeight;
+@property (nonatomic, strong) ProximiioLocation *floorPlanPivot;
 
 @end

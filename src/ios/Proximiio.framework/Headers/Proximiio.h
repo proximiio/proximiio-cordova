@@ -24,6 +24,7 @@
 #import "ProximiioBeacon.h"
 #import "ProximiioFormatter.h"
 #import "ProximiioCustomLocation.h"
+//#import "ProximiioMapView.h"
 
 //! Project version number for Proximiio.
 FOUNDATION_EXPORT double ProximiioVersionNumber;
@@ -38,6 +39,9 @@ FOUNDATION_EXPORT const unsigned char ProximiioVersionString[];
 - (id)initWithDelegate:(id)delegate token:(NSString *)token;
 - (id)initWithDelegate:(id)delegate email:(NSString *)email password:(NSString *)password;
 
++ (NSString *)visitorId;
+- (ProximiioLocation *)lastLocation;
+
 - (void)authWithToken:(NSString *)token callback:(void (^)(ProximiioState result))callback;
 - (void)authWithEmail:(NSString *)email password:(NSString *)password callback:(void (^)(ProximiioState result))callback;
 - (void)registerWithEmail:(NSString *)email
@@ -49,6 +53,15 @@ FOUNDATION_EXPORT const unsigned char ProximiioVersionString[];
                   country:(NSString *)country
                  callback:(void (^)(ProximiioState result))callback;
 
+- (void)addCustomiBeaconUUID:(NSString*)uuid;
+- (void)selectApplication:(NSString *)uuid;
+
++ (id)sharedInstance;
+
+@property (weak) id delegate;
+@property (nonatomic) id instance;
+
+// management methods
 
 - (BOOL)addPlace:(NSString *)name location:(CLLocationCoordinate2D)location
          address:(NSString *)address
@@ -188,14 +201,6 @@ indoorAtlasApiKeySecret:(NSString*)iaApiKeySecret
 - (void)deleteDepartment:(NSString *)uuid withCallback:(void (^)(BOOL success, NSError* error))callback;
 - (void)deleteGeofence:(NSString *)uuid withCallback:(void (^)(BOOL success, NSError* error))callback;
 - (void)deleteInput:(NSString *)uuid withCallback:(void (^)(BOOL success, NSError* error))callback;
-- (void)addCustomiBeaconUUID:(NSString*)uuid;
-- (void)selectApplication:(NSString *)uuid;
-
-+ (id)sharedInstance;
-
-@property (weak) id delegate;
-@property (nonatomic) id instance;
-
 
 @end
 
