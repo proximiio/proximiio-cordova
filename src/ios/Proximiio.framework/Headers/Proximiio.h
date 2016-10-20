@@ -60,6 +60,7 @@ FOUNDATION_EXPORT const unsigned char ProximiioVersionString[];
 
 @property (weak) id delegate;
 @property (nonatomic) id instance;
+@property (nonatomic, strong) NSString *visitorId;
 
 // management methods
 
