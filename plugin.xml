@@ -98,6 +98,9 @@
 					android:value="@integer/google_play_services_version" />
 		</config-file>
 
+		<edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
+		    <activity android:name="MainActivity" android:theme="@style/Theme.AppCompat.NoActionBar" />
+		</edit-config>
 
 	</platform>
 
