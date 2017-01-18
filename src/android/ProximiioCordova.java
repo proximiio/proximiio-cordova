@@ -2,6 +2,8 @@ package com.navtureapps.cordovaplugin;
 
 import org.apache.cordova.*;
 import org.json.JSONException;
+
+import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 import android.app.Activity;
 import android.util.Log;
@@ -34,13 +36,13 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
   private Activity activity;
   private static final String TAG = "ProximiioCordova";
 
-  CallbackContext context;
+  private CallbackContext context;
 
   private static final String ACTION_SET_TOKEN = "setToken";
   private static final String ACTION_ENABLE_DEBUG = "enableDebug";
   private static final String ACTION_HANDLE_PUSH = "handlePush";
 
-  String [] permissions = { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION };
+  private String [] permissions = { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION };
 
   @Override
   public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
@@ -74,7 +76,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
   }
 
   private void initProximiio() {
-    proximiio = ProximiioFactory.getProximiio(activity, activity);
+    proximiio = ProximiioFactory.getProximiio(activity);
     listener = new ProximiioListener() {
       @Override
       public void geofenceEnter(final ProximiioGeofence geofence) {
@@ -90,7 +92,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
       }
 
       @Override
-      public void geofenceExit(final ProximiioGeofence geofence) {
+      public void geofenceExit(final ProximiioGeofence geofence, @Nullable Long dwellTime) {
         activity.runOnUiThread(new Runnable() {
           @Override
           public void run() {
@@ -241,10 +243,10 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
 
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    if (proximiio != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       activity.onRequestPermissionsResult(requestCode, permissions, grantResults);
-      if (proximiio != null) {
-        proximiio.onRequestPermissionsResult(requestCode, permissions, grantResults);
-      }
+      proximiio.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
   }
 
   @Override
