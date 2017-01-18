@@ -135,8 +135,37 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
       }
 
       @Override
+      public void loggedIn(boolean online) {
+        super.loggedIn(online);
+        Log.e(TAG, "loggedIn! (" + online + ")");
+        activity.runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            String action = "javascript:proximiio.proximiioReady(\"" + proximiio.getVisitorID() + "\")";
+            log("initProximiio", action);
+            if (enableDebug) {
+              Toast.makeText(activity, "Proximi.io Initialized!", Toast.LENGTH_SHORT).show();
+            }
+            webView.loadUrl(action);
+          }
+        });
+      }
+
+      @Override
       public void loginFailed(LoginError loginError) {
+        super.loginFailed(loginError);
         Log.e(TAG, "LoginError! (" + loginError.toString() + ")");
+        activity.runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            String action = "javascript:proximiio.proximiioReady(null)";
+            log("initProximiio", action);
+            if (enableDebug) {
+              Toast.makeText(activity, "Proximi.io Authentication Failure!", Toast.LENGTH_SHORT).show();
+            }
+            webView.loadUrl(action);
+          }
+        });
       }
 
 
@@ -205,18 +234,6 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
 
     proximiio.addListener(listener);
     proximiio.setAuth(token);
-
-    activity.runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-        String action = "javascript:proximiio.proximiioReady(\"" + proximiio.getVisitorID() + "\")";
-        log("initProximiio", action);
-        if (enableDebug) {
-          Toast.makeText(activity, "Proximi.io Initialized!", Toast.LENGTH_SHORT).show();
-        }
-        webView.loadUrl(action);
-      }
-    });
   }
 
   private void log(String method, String action) {
