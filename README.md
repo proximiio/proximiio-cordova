@@ -182,19 +182,3 @@ sets Proximi.io SDK to handle output Push messages automatically
 ```javascript
 // Example TBA
 ```
-
-### Android Gotchas ###
-
-depending on your project configuration you may encounter a build error:
-
-```
-	uses-sdk:minSdkVersion 14 cannot be smaller than version 18 declared in library ....
-```
-
-in that case edit platforms/android/AndroidManifest.xml and replace
-
-```
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="22" />
-with
-    <uses-sdk android:minSdkVersion="18" android:targetSdkVersion="22" />
-```
