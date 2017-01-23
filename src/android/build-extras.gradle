@@ -19,11 +19,11 @@ dependencies {
 
 android {
   packagingOptions {
-    exclude 'META-INF/NOTICE'
     exclude 'META-INF/LICENSE'
     exclude 'META-INF/LICENSE-FIREBASE.txt'
+    exclude 'META-INF/NOTICE'
     exclude 'lib/arm64-v8a/libcpaJNI.so'
-    exclude 'lib/armeabi/libsqlcipher.so'
     exclude 'lib/x86/libsqlcipher.so'
+    exclude 'lib/x86_64/libcpaJNI.so'
   }
 }
