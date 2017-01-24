@@ -6,8 +6,12 @@ var ACTION_ENABLE_DEBUG = 'enableDebug';
 var ACTION_HANDLE_PUSH = 'handlePush';
 
 var dummy = function (obj) {
-  console.log('proximi.io default callback:' + JSON.stringify(obj));
+  //console.log('proximi.io default callback:' + JSON.stringify(obj));
 };
+
+var storage = window.localStorage;
+var initialized = false;
+var token = '';
 
 var geofenceTriggerCallback = dummy;
 var outputTriggerCallback   = dummy;
@@ -17,6 +21,69 @@ var errorCallback           = dummy;
 var proximiioReadyCallback  = dummy;
 var beaconFoundCallback     = dummy;
 var beaconLostCallback      = dummy;
+
+var needsPersistance = function() {
+  var dummyFn = dummy.toString();
+  return  !(
+          initialized === false &&
+          token === '' &&
+          geofenceTriggerCallback.toString() === dummyFn &&
+          outputTriggerCallback.toString() === dummyFn &&
+          positionChangeCallback.toString() === dummyFn &&
+          floorChangedCallback.toString() === dummyFn &&
+          errorCallback.toString() === dummyFn &&
+          proximiioReadyCallback.toString() === dummyFn &&
+          beaconFoundCallback.toString() === dummyFn &&
+          beaconLostCallback.toString() === dummyFn);
+};
+
+var onPause = function() {
+  // serialize & persist state  
+  if (needsPersistance()) {
+    var bundle = {
+      initialized: initialized,
+      token: token,
+      geofenceTriggerCallback: geofenceTriggerCallback.toString(),
+      outputTriggerCallback: outputTriggerCallback.toString(),
+      positionChangeCallback: positionChangeCallback.toString(),
+      floorChangedCallback: floorChangedCallback.toString(),
+      errorCallback: errorCallback.toString(),
+      proximiioReadyCallback: proximiioReadyCallback.toString(),
+      beaconFoundCallback: beaconFoundCallback.toString(),
+      beaconLostCallback: beaconLostCallback.toString()
+    };
+    var serialized = JSON.stringify(bundle);
+    storage.setItem(PLUGIN, serialized);    
+  }
+};
+
+var onResume = function() {
+  // load & deserialize state  
+  if (!needsPersistance()) {    
+    // all values are empty, load from localStorage
+    var serialized = storage.getItem(PLUGIN);    
+    if (serialized !== undefined && serialized.length > 0) {
+      var data = JSON.parse(serialized);
+      initialized = data.initialized;
+      token = data.token;
+      geofenceTriggerCallback = eval('geofenceTriggerCallback = ' + data.geofenceTriggerCallback);
+      outputTriggerCallback = eval('outputTriggerCallback = ' + data.outputTriggerCallback);
+      positionChangeCallback = eval('positionChangeCallback = ' + data.positionChangeCallback);
+      floorChangedCallback = eval('floorChangedCallback = ' + data.floorChangedCallback);
+      errorCallback = eval('errorCallback = ' + data.errorCallback);
+      proximiioReadyCallback = eval('proximiioReadyCallback = ' + data.proximiioReadyCallback);
+      beaconFoundCallback = eval('beaconFoundCallback = ' + data.beaconFoundCallback);
+      beaconLostCallback = eval('beaconLostCallback = ' + data.beaconLostCallback);      
+    }
+  }
+};
+
+var onDeviceReady = function() {  
+  document.addEventListener("pause", onPause, false);
+  document.addEventListener("resume", onResume, false);
+};
+
+document.addEventListener("deviceready", onDeviceReady);
 
 module.exports = {
 
@@ -30,7 +97,9 @@ module.exports = {
    * @param failureCallback {Function}
    * @returns
    */
-  setToken: function (authToken, onSuccess, onError) {
+  setToken: function (authToken, onSuccess, onError) {    
+    initialized = true;
+    token = authToken;
     cordova.exec(onSuccess, onError, PLUGIN, ACTION_SET_TOKEN, [authToken]);
   },
 
@@ -161,4 +230,5 @@ module.exports = {
     errorCallback(errorObj);
   },
 
+  onDeviceReady: onDeviceReady
 };
