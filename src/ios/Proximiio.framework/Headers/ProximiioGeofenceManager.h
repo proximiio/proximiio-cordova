@@ -14,7 +14,7 @@
 
 -(NSArray *)geofencesForLocation:(ProximiioLocation *)location;
 -(void)updateWithLocation:(ProximiioLocation *)location;
-
+-(void)exitAllGeofences;
 +(id)sharedManager;
 
 @property (weak) id delegate;

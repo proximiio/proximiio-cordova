@@ -18,6 +18,11 @@
 @property BOOL usesIndoorAtlas;
 @property BOOL usesIBeacons;
 @property BOOL usesEddyStones;
+@property BOOL usesGeofencePositioning;
+@property BOOL usesTrilateration;
+@property BOOL usesNetworkInterval;
+@property int networkInterval;
+@property int nativeActivationThreshold;
 
 + (ProximiioApplication *)applicationFromJSON:(NSDictionary *)json;
 

@@ -7,24 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ProximiioLocation.h"
-#import "ProximiioLocationSource.h"
-#import "ProximiioState.h"
-#import "ProximiioMode.h"
-#import "ProximiioGeofence.h"
-#import "ProximiioIBeacon.h"
-#import "ProximiioEddystoneBeacon.h"
-#import "ProximiioInput.h"
-#import "ProximiioAPIResult.h"
-#import "ProximiioResourceManager.h"
-#import "ProximiioGeofenceManager.h"
-#import "ProximiioAPIResult.h"
-#import "ProximiioKalmanFilter.h"
-#import "ProximiioInputType.h"
-#import "ProximiioBeacon.h"
-#import "ProximiioFormatter.h"
-#import "ProximiioCustomLocation.h"
-//#import "ProximiioMapView.h"
+#import <Proximiio/ProximiioLocation.h>
+#import <Proximiio/ProximiioLocationSource.h>
+#import <Proximiio/ProximiioState.h>
+#import <Proximiio/ProximiioMode.h>
+#import <Proximiio/ProximiioGeofence.h>
+#import <Proximiio/ProximiioIBeacon.h>
+#import <Proximiio/ProximiioEddystoneBeacon.h>
+#import <Proximiio/ProximiioInput.h>
+#import <Proximiio/ProximiioAPIResult.h>
+#import <Proximiio/ProximiioResourceManager.h>
+#import <Proximiio/ProximiioGeofenceManager.h>
+#import <Proximiio/ProximiioKalmanFilter.h>
+#import <Proximiio/ProximiioInputType.h>
+#import <Proximiio/ProximiioFormatter.h>
+#import <Proximiio/ProximiioCustomLocation.h>
+#import <Proximiio/ProximiioMapView.h>
+#import <Proximiio/ProximiioManager.h>
 
 //! Project version number for Proximiio.
 FOUNDATION_EXPORT double ProximiioVersionNumber;
@@ -34,13 +33,27 @@ FOUNDATION_EXPORT const unsigned char ProximiioVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Proximiio/PublicHeader.h>
 
+typedef enum ProximiioBufferSize {
+    kProximiioBufferMini,
+    kProximiioBufferSmall,
+    kProximiioBufferMedium,
+    kProximiioBufferLarge,
+    kProximiioBufferExtraLarge
+} ProximiioBufferSize;
+
 @interface Proximiio : NSObject
 
+- (void)requestPermissions;
 - (id)initWithDelegate:(id)delegate token:(NSString *)token;
 - (id)initWithDelegate:(id)delegate email:(NSString *)email password:(NSString *)password;
+- (void)startUpdating;
+- (void)stopUpdating;
+- (void)extendBackgroundTime;
 
 + (NSString *)visitorId;
 - (ProximiioLocation *)lastLocation;
+
+- (void)setBufferSize:(ProximiioBufferSize)bufferSize;
 
 - (void)authWithToken:(NSString *)token callback:(void (^)(ProximiioState result))callback;
 - (void)authWithEmail:(NSString *)email password:(NSString *)password callback:(void (^)(ProximiioState result))callback;

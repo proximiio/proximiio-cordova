@@ -12,37 +12,37 @@
 
 @interface ProximiioLocation : CLLocation
 
-+ (ProximiioLocation *)locationWithLatitude:(float)latitude
++ (ProximiioLocation * _Nonnull)locationWithLatitude:(float)latitude
                                   longitude:(float)longitude;
 
-+ (ProximiioLocation *)locationWithLatitude:(float)latitude
++ (ProximiioLocation * _Nonnull)locationWithLatitude:(float)latitude
                                   longitude:(float)longitude
                          horizontalAccuracy:(float)accuracy;
 
-+ (id)locationWithCLLocation:(CLLocation *)location
-                      source:(id)source
++ (id _Nonnull)locationWithCLLocation:(CLLocation *_Nonnull)location
+                      source:(id _Nullable)source
                        cycle:(int)cycle;
-    
-+ (id)locationWithCLLocation:(CLLocation *)location
-                      source:(id)source;
 
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate
++ (id _Nonnull)locationWithCLLocation:(CLLocation *_Nonnull)location
+                      source:(id _Nullable)source;
+
+- (id _Nonnull)initWithCoordinate:(CLLocationCoordinate2D)coordinate
                 altitude:(CLLocationDistance)altitude
       horizontalAccuracy:(CLLocationAccuracy)hAccuracy
         verticalAccuracy:(CLLocationAccuracy)vAccuracy
-               timestamp:(NSDate *)timestamp
-                  source:(ProximiioLocationSource *)source;
+               timestamp:(NSDate *_Nonnull)timestamp
+                  source:(ProximiioLocationSource *_Nonnull)source;
 
 - (BOOL)hasSource;
 - (BOOL)isWithinInterval:(float)interval;
-- (BOOL)hasEqualCoordinatesTo:(ProximiioLocation *)otherLocation;
+- (BOOL)hasEqualCoordinatesTo:(ProximiioLocation *_Nonnull)otherLocation;
 
--(double) bearingToLocation:(CLLocation *) destinationLocation;
+-(double) bearingToLocation:(CLLocation *_Nonnull) destinationLocation;
 
 @property int cycle;
 @property double originalAccuracy;
 @property double kalmanFix;
-@property (nonatomic, strong) ProximiioLocationSource *source;
+@property (nonatomic, strong) ProximiioLocationSource *_Nonnull source;
 
 // CLLocation+GreatCircle extensions
 

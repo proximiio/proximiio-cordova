@@ -4,9 +4,25 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>GreatCircle/CLLocation+GreatCircleExtensions.h</key>
+		<data>
+		FPmD9k8BDu4oCZGkLrZctjlBBto=
+		</data>
+		<key>GreatCircle/CLLocation+GreatCircleExtensions.m</key>
+		<data>
+		yrcJDRsQqujz9+ruewQ6CjtOA9U=
+		</data>
+		<key>GreatCircle/GreatCircle.h</key>
+		<data>
+		91ywa8JwjcjUQElXgO0lUp9FMk4=
+		</data>
+		<key>GreatCircle/Info.plist</key>
+		<data>
+		gEXFl5LvS1aL0q5dMLYOYWt8oWs=
+		</data>
 		<key>Headers/Proximiio.h</key>
 		<data>
-		XQVWWNKmt9cP2TN6IlDZ9jt/mXQ=
+		F7uM5wr/3bi/EHSVrX3QLGUSIMw=
 		</data>
 		<key>Headers/ProximiioAPIResult.h</key>
 		<data>
@@ -14,7 +30,7 @@
 		</data>
 		<key>Headers/ProximiioApplication.h</key>
 		<data>
-		Ul5uvWVeKBWr/DMnEGRr7BaMK8Q=
+		zWXQ4Hn1+kPx8Am71kqth/YuV5I=
 		</data>
 		<key>Headers/ProximiioBeacon.h</key>
 		<data>
@@ -46,7 +62,7 @@
 		</data>
 		<key>Headers/ProximiioGeofenceManager.h</key>
 		<data>
-		ysZ57ga7pOa9SsOOCHlyVfj/VC4=
+		fI1sbqh+zl0b+8Be13V0u1aCNec=
 		</data>
 		<key>Headers/ProximiioIBeacon.h</key>
 		<data>
@@ -66,11 +82,23 @@
 		</data>
 		<key>Headers/ProximiioLocation.h</key>
 		<data>
-		RcYH1eRD7nnW40LL6vZ7/w5wkw8=
+		a+MgOU42GETA+mGg5P0p/ASbsS8=
+		</data>
+		<key>Headers/ProximiioLocationManagerDelegate.h</key>
+		<data>
+		YSZzAsF34zZuc+wHZwWdbLPCP54=
 		</data>
 		<key>Headers/ProximiioLocationSource.h</key>
 		<data>
 		xPTFvr1su0jydTGhtGmF1ybcfKk=
+		</data>
+		<key>Headers/ProximiioManager.h</key>
+		<data>
+		fUxWbU40TVFwCHU9akcPpFKWig0=
+		</data>
+		<key>Headers/ProximiioMapView.h</key>
+		<data>
+		9MMysKCcPiBd5qabtsot4SRpFng=
 		</data>
 		<key>Headers/ProximiioMode.h</key>
 		<data>
@@ -94,24 +122,108 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Y7DZqkAob3fdbQn7IKN8q4r85kI=
+		QQdycuX3uN84GzyR8yvmkje3qik=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		lu6NByxPLHwp9miu09XuSJj+GKA=
 		</data>
+		<key>assets/images/eddystone_marker.png</key>
+		<data>
+		QBiLtLObz7dJeLExOLrujMUQXYw=
+		</data>
+		<key>assets/images/ibeacon_marker.png</key>
+		<data>
+		wTWqEOahcfCHmhE112lM9wx5mN8=
+		</data>
+		<key>assets/images/layers-2x.png</key>
+		<data>
+		FSoWIzPkbST52J9WYxL8DGQBHe4=
+		</data>
+		<key>assets/images/layers.png</key>
+		<data>
+		yedSjkkaOSMrokonBsbHOdb7DwY=
+		</data>
+		<key>assets/images/marker-icon-2x.png</key>
+		<data>
+		laRLnKcf4D/fZd3Y7qEvGRDzjeI=
+		</data>
+		<key>assets/images/marker-icon.png</key>
+		<data>
+		YKkLy7K0K33bRVbblOt8EISw5do=
+		</data>
+		<key>assets/images/marker-shadow.png</key>
+		<data>
+		e2qN9jkwOB6WYE5wUWjQUn1rgrw=
+		</data>
+		<key>assets/index.html</key>
+		<data>
+		TAdiAB8+wOoRVBpV0gzoYyhYh7Q=
+		</data>
+		<key>assets/proximiio-map.css</key>
+		<data>
+		kzsEd3Y1/4KoSZ1Tu26zxdtDVIU=
+		</data>
+		<key>assets/proximiio-map.js</key>
+		<data>
+		EWatw8Mca5MZ9CqnVXh6f+hT6b4=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>GreatCircle/CLLocation+GreatCircleExtensions.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			FPmD9k8BDu4oCZGkLrZctjlBBto=
+			</data>
+			<key>hash2</key>
+			<data>
+			r7HnCcKZSO9k0DQc+4i/lOe6KulEmbqvcz5AGMwVyv0=
+			</data>
+		</dict>
+		<key>GreatCircle/CLLocation+GreatCircleExtensions.m</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			yrcJDRsQqujz9+ruewQ6CjtOA9U=
+			</data>
+			<key>hash2</key>
+			<data>
+			fBX0I6V2xOwepcKZg9FVAErSjt90+MoodCFt8nEpqC4=
+			</data>
+		</dict>
+		<key>GreatCircle/GreatCircle.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			91ywa8JwjcjUQElXgO0lUp9FMk4=
+			</data>
+			<key>hash2</key>
+			<data>
+			g/V755LT5vJGh4qeLDk6xcB9IusYzGn6vmjDZnXSkFM=
+			</data>
+		</dict>
+		<key>GreatCircle/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			gEXFl5LvS1aL0q5dMLYOYWt8oWs=
+			</data>
+			<key>hash2</key>
+			<data>
+			Ikc0t/F8r1hd6urvEpN6v6qygED9QC3TVD1LeflqVHE=
+			</data>
+		</dict>
 		<key>Headers/Proximiio.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			XQVWWNKmt9cP2TN6IlDZ9jt/mXQ=
+			F7uM5wr/3bi/EHSVrX3QLGUSIMw=
 			</data>
 			<key>hash2</key>
 			<data>
-			HfvIWCTQK7OpuhAsS0SdsRScsEcvuFoxF5YtZm3o62E=
+			zwIOQjftiBEs5pF9VJJ4pw9PqZAOEIZF+AyYEoiFfSI=
 			</data>
 		</dict>
 		<key>Headers/ProximiioAPIResult.h</key>
@@ -129,11 +241,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Ul5uvWVeKBWr/DMnEGRr7BaMK8Q=
+			zWXQ4Hn1+kPx8Am71kqth/YuV5I=
 			</data>
 			<key>hash2</key>
 			<data>
-			n6R2BSacBy1nKgnI3aPscbh8XNb0yjrAxzcAXLXrsJk=
+			5K8Vlb127lNIJTiYus5pTQxzdIi5qxJ326pW9pdA9rY=
 			</data>
 		</dict>
 		<key>Headers/ProximiioBeacon.h</key>
@@ -217,11 +329,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ysZ57ga7pOa9SsOOCHlyVfj/VC4=
+			fI1sbqh+zl0b+8Be13V0u1aCNec=
 			</data>
 			<key>hash2</key>
 			<data>
-			A6TG6OlvQndvBjdTf/Btyf0snimvsi9jVQLtmjv94oM=
+			yqE2QE7jR7pW9j4fo3bZ3NCKpr+YcJaYOAX8J3Cq9Ko=
 			</data>
 		</dict>
 		<key>Headers/ProximiioIBeacon.h</key>
@@ -272,11 +384,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			RcYH1eRD7nnW40LL6vZ7/w5wkw8=
+			a+MgOU42GETA+mGg5P0p/ASbsS8=
 			</data>
 			<key>hash2</key>
 			<data>
-			3jjhU5Tr0ja9m5OawuKuu0LlHGrkYBu1R+XTa++yll0=
+			yPT1Bhpp6Shy2f4rIRJuFuaoX5PqRJlVpJproW7D/Vc=
+			</data>
+		</dict>
+		<key>Headers/ProximiioLocationManagerDelegate.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			YSZzAsF34zZuc+wHZwWdbLPCP54=
+			</data>
+			<key>hash2</key>
+			<data>
+			tooppcL1UT5rvHeks8XdtfxCH5VcINSISE76twG60Xw=
 			</data>
 		</dict>
 		<key>Headers/ProximiioLocationSource.h</key>
@@ -288,6 +411,28 @@
 			<key>hash2</key>
 			<data>
 			u0Q+DYktv5Pi0832dTvPNTzHnyF6HzMr7xK0HEcMFek=
+			</data>
+		</dict>
+		<key>Headers/ProximiioManager.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			fUxWbU40TVFwCHU9akcPpFKWig0=
+			</data>
+			<key>hash2</key>
+			<data>
+			qikR8dX/tbPLqksOdslZI4HdAEpxq619q+94o1brYCQ=
+			</data>
+		</dict>
+		<key>Headers/ProximiioMapView.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			9MMysKCcPiBd5qabtsot4SRpFng=
+			</data>
+			<key>hash2</key>
+			<data>
+			6Gkjc3xLihWmB6fJp6NyPBCP4Nky92YsUUptWIXTlZM=
 			</data>
 		</dict>
 		<key>Headers/ProximiioMode.h</key>
@@ -356,6 +501,116 @@
 			/pXUyWqMgeaCxo9vgmd/ZkhVqHBCnKZ7XZZ+DQ8hoPE=
 			</data>
 		</dict>
+		<key>assets/images/eddystone_marker.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			QBiLtLObz7dJeLExOLrujMUQXYw=
+			</data>
+			<key>hash2</key>
+			<data>
+			jV9K8gDe/JgcOQGvRYZWtVdRZBgXL464EhAMIN7RKjI=
+			</data>
+		</dict>
+		<key>assets/images/ibeacon_marker.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			wTWqEOahcfCHmhE112lM9wx5mN8=
+			</data>
+			<key>hash2</key>
+			<data>
+			58q+HyvdZeX/zom1wtJOJ8TRrxH8oBZiU/EZ8TFSPqU=
+			</data>
+		</dict>
+		<key>assets/images/layers-2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			FSoWIzPkbST52J9WYxL8DGQBHe4=
+			</data>
+			<key>hash2</key>
+			<data>
+			Bm2sqFDY/77wB68AsG6sABVyje4nnFHzy2xxbffELt8=
+			</data>
+		</dict>
+		<key>assets/images/layers.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			yedSjkkaOSMrokonBsbHOdb7DwY=
+			</data>
+			<key>hash2</key>
+			<data>
+			Hbvp0CjikvNvy6j4s6KNXokydU/CIVuaxp5M3s9RB8Y=
+			</data>
+		</dict>
+		<key>assets/images/marker-icon-2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			laRLnKcf4D/fZd3Y7qEvGRDzjeI=
+			</data>
+			<key>hash2</key>
+			<data>
+			LXei5MLwi7rEGAgyTvlGuaL+YbYVBIDQEbcrN5w7I40=
+			</data>
+		</dict>
+		<key>assets/images/marker-icon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			YKkLy7K0K33bRVbblOt8EISw5do=
+			</data>
+			<key>hash2</key>
+			<data>
+			V0w6XMqF9BFAhbaEFZbWLwDXyJLHsD8oy/owHesdxDc=
+			</data>
+		</dict>
+		<key>assets/images/marker-shadow.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			e2qN9jkwOB6WYE5wUWjQUn1rgrw=
+			</data>
+			<key>hash2</key>
+			<data>
+			Jk9cZAM58ELdcpBiz8BMF/jqDymIK1OOOEjtjxDttNo=
+			</data>
+		</dict>
+		<key>assets/index.html</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			TAdiAB8+wOoRVBpV0gzoYyhYh7Q=
+			</data>
+			<key>hash2</key>
+			<data>
+			k9xiUpPgZmm63vh3Dk35Fu+aAdzw/YhX63cvZn1y4lQ=
+			</data>
+		</dict>
+		<key>assets/proximiio-map.css</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			kzsEd3Y1/4KoSZ1Tu26zxdtDVIU=
+			</data>
+			<key>hash2</key>
+			<data>
+			1haYi1mAvfQrWIjRO3ZDqqrNYL4Jnyqivyxbdv6koos=
+			</data>
+		</dict>
+		<key>assets/proximiio-map.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			EWatw8Mca5MZ9CqnVXh6f+hT6b4=
+			</data>
+			<key>hash2</key>
+			<data>
+			oEgg3FXEkae3dQGKH1svgBVeLg15hVr8XgkCTmc+oFY=
+			</data>
+		</dict>
 	</dict>
 	<key>rules</key>
 	<dict>
@@ -374,6 +629,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^version.plist$</key>
 		<true/>
@@ -419,6 +679,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^Info\.plist$</key>
 		<dict>
