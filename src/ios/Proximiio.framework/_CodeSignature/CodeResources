@@ -4,22 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>GreatCircle/CLLocation+GreatCircleExtensions.h</key>
-		<data>
-		FPmD9k8BDu4oCZGkLrZctjlBBto=
-		</data>
-		<key>GreatCircle/CLLocation+GreatCircleExtensions.m</key>
-		<data>
-		yrcJDRsQqujz9+ruewQ6CjtOA9U=
-		</data>
-		<key>GreatCircle/GreatCircle.h</key>
-		<data>
-		91ywa8JwjcjUQElXgO0lUp9FMk4=
-		</data>
-		<key>GreatCircle/Info.plist</key>
-		<data>
-		gEXFl5LvS1aL0q5dMLYOYWt8oWs=
-		</data>
 		<key>Headers/Proximiio.h</key>
 		<data>
 		F7uM5wr/3bi/EHSVrX3QLGUSIMw=
@@ -171,50 +155,6 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>GreatCircle/CLLocation+GreatCircleExtensions.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			FPmD9k8BDu4oCZGkLrZctjlBBto=
-			</data>
-			<key>hash2</key>
-			<data>
-			r7HnCcKZSO9k0DQc+4i/lOe6KulEmbqvcz5AGMwVyv0=
-			</data>
-		</dict>
-		<key>GreatCircle/CLLocation+GreatCircleExtensions.m</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			yrcJDRsQqujz9+ruewQ6CjtOA9U=
-			</data>
-			<key>hash2</key>
-			<data>
-			fBX0I6V2xOwepcKZg9FVAErSjt90+MoodCFt8nEpqC4=
-			</data>
-		</dict>
-		<key>GreatCircle/GreatCircle.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			91ywa8JwjcjUQElXgO0lUp9FMk4=
-			</data>
-			<key>hash2</key>
-			<data>
-			g/V755LT5vJGh4qeLDk6xcB9IusYzGn6vmjDZnXSkFM=
-			</data>
-		</dict>
-		<key>GreatCircle/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			gEXFl5LvS1aL0q5dMLYOYWt8oWs=
-			</data>
-			<key>hash2</key>
-			<data>
-			Ikc0t/F8r1hd6urvEpN6v6qygED9QC3TVD1LeflqVHE=
-			</data>
-		</dict>
 		<key>Headers/Proximiio.h</key>
 		<dict>
 			<key>hash</key>
