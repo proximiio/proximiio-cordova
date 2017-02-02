@@ -54,7 +54,6 @@
 
 - (void)requestPermissions:(CDVInvokedUrlCommand*)command {
     NSString* callbackId    = [command callbackId];
-    NSString* handleString  = [[command arguments] objectAtIndex:0];
     [[Proximiio sharedInstance] requestPermissions];
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
