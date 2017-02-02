@@ -4,6 +4,7 @@ var PLUGIN = 'ProximiioCordova';
 var ACTION_SET_TOKEN = 'setToken';
 var ACTION_ENABLE_DEBUG = 'enableDebug';
 var ACTION_HANDLE_PUSH = 'handlePush';
+var ACTION_REQUEST_PERMISSIONS = 'requestPermissions';
 
 var dummy = function (obj) {
   //console.log('proximi.io default callback:' + JSON.stringify(obj));
@@ -88,6 +89,10 @@ document.addEventListener("deviceready", onDeviceReady);
 module.exports = {
 
   // ACTIONS
+
+  requestPermissions: function(onSuccess, onError) {
+    cordova.exec(onSuccess, onError, PLUGIN, ACTION_SET_TOKEN, []);
+  },
 
   /**
    * Sets authorization token and initializes Proximi.io native plugin

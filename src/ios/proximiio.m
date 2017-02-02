@@ -15,6 +15,7 @@
 - (void)setToken:(CDVInvokedUrlCommand*)command;
 - (void)enableDebug:(CDVInvokedUrlCommand*)command;
 - (void)handlePush:(CDVInvokedUrlCommand*)command;
+- (void)requestPermissions:(CDVInvokedUrlCommand*)command;
 
 @end
 
@@ -51,9 +52,18 @@
     [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
 }
 
+- (void)requestPermissions:(CDVInvokedUrlCommand*)command {
+    NSString* callbackId    = [command callbackId];
+    NSString* handleString  = [[command arguments] objectAtIndex:0];
+    [[Proximiio sharedInstance] requestPermissions];
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
+}
+
 - (void)handlePush:(CDVInvokedUrlCommand*)command {
     NSString* callbackId    = [command callbackId];
     NSString* handleString  = [[command arguments] objectAtIndex:0];
+    [self pro]
     _mHandlePush = [handleString isEqualToString:@"true"];
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [[self commandDelegate] sendPluginResult:result callbackId:callbackId];

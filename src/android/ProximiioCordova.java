@@ -41,6 +41,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
   private static final String ACTION_SET_TOKEN = "setToken";
   private static final String ACTION_ENABLE_DEBUG = "enableDebug";
   private static final String ACTION_HANDLE_PUSH = "handlePush";
+  private static final String ACTION_REQUEST_PERMISSIONS = "requestPermissions";
 
   private String [] permissions = { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION };
 
@@ -52,17 +53,21 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
     if (action.equals(ACTION_SET_TOKEN)) {
         if (proximiio == null) {
           token = args.getString(0);
-          if(hasPermisssion()) {
-              PluginResult r = new PluginResult(PluginResult.Status.OK);
-              context.sendPluginResult(r);
-              initProximiio();
-              return true;
-          }
-          else {
-              Log.d(TAG, "Permissions not found, requesting");
-              PermissionHelper.requestPermissions(this, 0, permissions);
-          }
+          PluginResult r = new PluginResult(PluginResult.Status.OK);          
+          context.sendPluginResult(r);
+          initProximiio();
           return true;
+          // if(hasPermisssion()) {
+          //     PluginResult r = new PluginResult(PluginResult.Status.OK);
+          //     context.sendPluginResult(r);
+          //     initProximiio();
+          //     return true;
+          // }
+          // else {
+          //     Log.d(TAG, "Permissions not found, requesting");
+          //     PermissionHelper.requestPermissions(this, 0, permissions);
+          // }
+          // return true;
         }
     } else if (action.equals(ACTION_ENABLE_DEBUG)) {
       String value = args.getString(0);
@@ -71,6 +76,10 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
     } else if (action.equals(ACTION_HANDLE_PUSH)) {
       String value = args.getString(0);
       handlePush = value.equals("true");
+    } else if (actions.equals(ACTION_REQUEST_PERMISSIONS)) {
+      if (proximiio != null) {
+        proximiio.checkPermissions();
+      }
     }
     return true;
   }
