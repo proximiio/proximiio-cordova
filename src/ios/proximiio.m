@@ -63,7 +63,6 @@
 - (void)handlePush:(CDVInvokedUrlCommand*)command {
     NSString* callbackId    = [command callbackId];
     NSString* handleString  = [[command arguments] objectAtIndex:0];
-    [self pro]
     _mHandlePush = [handleString isEqualToString:@"true"];
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
