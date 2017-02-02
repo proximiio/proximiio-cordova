@@ -251,14 +251,6 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
   }
 
   @Override
-  public void onStop() {
-      super.onStop();
-      if (proximiio != null) {
-        proximiio.removeListener(listener);
-      }
-  }
-
-  @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     if (proximiio != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       activity.onRequestPermissionsResult(requestCode, permissions, grantResults);
