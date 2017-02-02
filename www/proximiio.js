@@ -91,7 +91,7 @@ module.exports = {
   // ACTIONS
 
   requestPermissions: function(onSuccess, onError) {
-    cordova.exec(onSuccess, onError, PLUGIN, ACTION_SET_TOKEN, []);
+    cordova.exec(onSuccess, onError, PLUGIN, ACTION_REQUEST_PERMISSIONS, []);
   },
 
   /**
