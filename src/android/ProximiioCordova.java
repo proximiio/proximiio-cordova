@@ -76,7 +76,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
     } else if (action.equals(ACTION_HANDLE_PUSH)) {
       String value = args.getString(0);
       handlePush = value.equals("true");
-    } else if (actions.equals(ACTION_REQUEST_PERMISSIONS)) {
+    } else if (action.equals(ACTION_REQUEST_PERMISSIONS)) {
       if (proximiio != null) {
         proximiio.checkPermissions();
       }
