@@ -5,12 +5,12 @@
 #import <Proximiio/Proximiio.h>
 
 @interface proximiio : CDVPlugin <ProximiioDelegate> {
-  // Member variables go here.
-
+    // Member variables go here.
 }
 
 @property (readwrite, assign) BOOL mEnableDebug;
 @property (readwrite, assign) BOOL mHandlePush;
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 - (void)setToken:(CDVInvokedUrlCommand*)command;
 - (void)enableDebug:(CDVInvokedUrlCommand*)command;
@@ -54,7 +54,18 @@
 
 - (void)requestPermissions:(CDVInvokedUrlCommand*)command {
     NSString* callbackId    = [command callbackId];
-    [[Proximiio sharedInstance] requestPermissions];
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                             categories:nil];
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
+    _locationManager = [[CLLocationManager alloc] init];
+    [_locationManager requestAlwaysAuthorization];
+    
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
 }
@@ -73,48 +84,54 @@
     if (beacon.type == kProximiioInputTypeIBeacon) {
         ProximiioIBeacon *iBeacon = (ProximiioIBeacon *)beacon;
         NSDictionary *data = @{
-            @"type": @"iBeacon",
-            @"uuid": [[iBeacon uuid] UUIDString],
-            @"major": @([iBeacon major]),
-            @"minor": @([iBeacon minor]),
-            @"accuracy": @([iBeacon distance])
-        };
+                               @"type": @"iBeacon",
+                               @"uuid": [[iBeacon uuid] UUIDString],
+                               @"major": @([iBeacon major]),
+                               @"minor": @([iBeacon minor]),
+                               @"accuracy": @([iBeacon distance])
+                               };
         return [self toJSON:data];
     } else if (beacon.type == kProximiioInputTypeEddystone){
         ProximiioEddystoneBeacon *eddy = (ProximiioEddystoneBeacon *)beacon;
         NSDictionary *data = @{
-            @"type": @"Eddystone",
-            @"namespace": eddy.Namespace,
-            @"instanceId": eddy.InstanceID,
-            @"accuracy": eddy.accuracy
-        };
+                               @"type": @"Eddystone",
+                               @"namespace": eddy.Namespace,
+                               @"instanceId": eddy.InstanceID,
+                               @"accuracy": eddy.accuracy
+                               };
         return [self toJSON:data];
     } else {
         NSDictionary *data = @{
-            @"type": @"Custom"
-        };
+                               @"type": @"Custom"
+                               };
         return [self toJSON:data];
     }
 }
 
 // PROXIMI.IO DELEGATES
 
-- (BOOL)proximiioHandlePushMessage:(NSString*)title {
-    return _mHandlePush;
-}
-
 - (void)proximiioFloorChanged:(ProximiioFloor *)floor {
     NSString *action = [NSString stringWithFormat:@"proximiio.changedFloor(%@);", [self toJSON:floor.data]];
-    [self log:@"proximiioHandleOutput" action:action];
+    [self log:@"proximiioChangedFloor" action:action];
     [self runJavascript:action];
+}
+
+
+- (BOOL)proximiioHandlePushMessage:(NSString*)title {
+    if (_mHandlePush) {
+        NSString *action = [NSString stringWithFormat:@"proximiio.pushMessage(\"%@\");", title];
+        [self log:@"proximiioHandlePushMessage" action:action];
+        [self runJavascript:action];
+    }
+    return _mHandlePush;
 }
 
 - (void)proximiioHandleOutput:(NSObject*)payload {
     NSString *action;
     if ([payload isKindOfClass:NSDictionary.class]) {
-      action = [NSString stringWithFormat:@"proximiio.triggeredOutput(%@);", [self toJSON:(NSDictionary *)payload]];
+        action = [NSString stringWithFormat:@"proximiio.triggeredOutput(%@);", [self toJSON:(NSDictionary *)payload]];
     } else {
-      action = [NSString stringWithFormat:@"proximiio.triggeredOutput(%@);", payload];
+        action = [NSString stringWithFormat:@"proximiio.triggeredOutput(%@);", payload];
     }
     [self log:@"proximiioHandleOutput" action:action];
     [self runJavascript:action];
@@ -132,14 +149,14 @@
     [self runJavascript:action];
 }
 
-- (void)proximiioPositionUpdated:(CLLocation *)location {    
+- (void)proximiioPositionUpdated:(CLLocation *)location {
     NSDictionary *position = @{
-      @"coordinates": @{
-        @"lat": @(location.coordinate.latitude),
-        @"lon": @(location.coordinate.longitude)
-      },
-      @"accuracy": @(location.horizontalAccuracy)
-    };
+                               @"coordinates": @{
+                                       @"lat": @(location.coordinate.latitude),
+                                       @"lon": @(location.coordinate.longitude)
+                                       },
+                               @"accuracy": @(location.horizontalAccuracy)
+                               };
     NSString *action = [NSString stringWithFormat:@"proximiio.updatedPosition(%@);", [self toJSON:position]];
     [self log:@"proximiioPositionUpdated" action:action];
     [self runJavascript:action];
@@ -177,11 +194,11 @@
 
 - (NSDictionary *)eddystoneToDictionary:(ProximiioEddystoneBeacon *)beacon {
     return @{
-        @"type": @"Eddystone",
-        @"namespace": beacon.Namespace,
-        @"instanceId": beacon.InstanceID,
-        @"accuracy": beacon.accuracy
-    };
+             @"type": @"Eddystone",
+             @"namespace": beacon.Namespace,
+             @"instanceId": beacon.InstanceID,
+             @"accuracy": beacon.accuracy
+             };
 }
 
 - (void)proximiioFoundEddystoneBeacon:(ProximiioEddystoneBeacon *)beacon isRegistered:(BOOL)isRegistered {
@@ -210,7 +227,7 @@
 - (void)log:(NSString *)method action:(NSString *)action {
     _mEnableDebug = YES;
     if (_mEnableDebug) {
-      NSLog(@"[ProximiioSDK] %@: %@", method, action);
+        NSLog(@"[ProximiioSDK] %@: %@", method, action);
     }
 }
 
@@ -219,16 +236,16 @@
 }
 
 -(NSString*)toJSON:(NSDictionary *)data {
-   NSError *error;
-   NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data
-                                                 options:(NSJSONWritingOptions)0
-                                                   error:&error];
-   if (!jsonData) {
-      NSLog(@"json error: %@", error.localizedDescription);
-      return @"{}";
-   } else {
-      return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-   }
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data
+                                                       options:(NSJSONWritingOptions)0
+                                                         error:&error];
+    if (!jsonData) {
+        NSLog(@"json error: %@", error.localizedDescription);
+        return @"{}";
+    } else {
+        return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
 }
 
 @end

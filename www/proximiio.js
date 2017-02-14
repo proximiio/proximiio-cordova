@@ -22,6 +22,7 @@ var errorCallback           = dummy;
 var proximiioReadyCallback  = dummy;
 var beaconFoundCallback     = dummy;
 var beaconLostCallback      = dummy;
+var pushMessageCallback     = dummy;
 
 var needsPersistance = function() {
   var dummyFn = dummy.toString();
@@ -34,6 +35,7 @@ var needsPersistance = function() {
           floorChangedCallback.toString() === dummyFn &&
           errorCallback.toString() === dummyFn &&
           proximiioReadyCallback.toString() === dummyFn &&
+          pushMessageCallback.toString() === dummyFn &&
           beaconFoundCallback.toString() === dummyFn &&
           beaconLostCallback.toString() === dummyFn);
 };
@@ -51,7 +53,8 @@ var onPause = function() {
       errorCallback: errorCallback.toString(),
       proximiioReadyCallback: proximiioReadyCallback.toString(),
       beaconFoundCallback: beaconFoundCallback.toString(),
-      beaconLostCallback: beaconLostCallback.toString()
+      beaconLostCallback: beaconLostCallback.toString(),
+      pushMessageCallback: pushMessageCallback.toString()
     };
     var serialized = JSON.stringify(bundle);
     storage.setItem(PLUGIN, serialized);    
@@ -74,7 +77,8 @@ var onResume = function() {
       errorCallback = eval('errorCallback = ' + data.errorCallback);
       proximiioReadyCallback = eval('proximiioReadyCallback = ' + data.proximiioReadyCallback);
       beaconFoundCallback = eval('beaconFoundCallback = ' + data.beaconFoundCallback);
-      beaconLostCallback = eval('beaconLostCallback = ' + data.beaconLostCallback);      
+      beaconLostCallback = eval('beaconLostCallback = ' + data.beaconLostCallback);
+      pushMessageCallback = eval('pushMessageCallback = ' + data.pushMessageCallback);
     }
   }
 };
@@ -135,7 +139,7 @@ module.exports = {
   },
 
   // CALLBACKS
-
+    
   /**
    * Sets input trigger callback
    * this function is called when visitor enters or leaves Geofence
@@ -163,6 +167,8 @@ module.exports = {
    * @returns
    */
   setOutputTriggerCallback: function (callback) { outputTriggerCallback = callback; },
+  
+  setPushMessageCallback: function (callback) { pushMessageCallback = callback; },
 
   /**
    * Sets position change callback
@@ -227,6 +233,8 @@ module.exports = {
 
   lostBeacon: function (beacon) { beaconLostCallback(beacon); },
 
+  pushMessage: function (title) { pushMessageCallback(title); },
+    
   encounteredError: function (code, id, str) {
     var errorObj = {};
     errorObj.domain = id;
