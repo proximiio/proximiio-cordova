@@ -209,9 +209,19 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
         activity.runOnUiThread(new Runnable() {
           @Override
           public void run() {
-            String action;
+            String action;            
             if (registered) {
-              action = "javascript:proximiio.foundBeacon(" + beacon.getInput().getJSON().toString() + ")";
+              JSONObject json = null;
+              try {
+                json = new JSONObject(beacon.getInput().getJSON());
+                json.put("accuracy", beacon.getAccuracy());
+              } catch (JSONException e) {
+                e.printStackTrace();
+              }
+
+              if (json != null) {
+                action = "javascript:proximiio.foundBeacon(" + json.toString() + ")";
+              }
             } else {
               String json = "{\"name\": \"Unknown Beacon\", \"accuracy\": "+ beacon.getAccuracy() + ",\"uuid\": \"" + beacon.getUUID() +"\", \"major\": " + beacon.getMajor() + ", \"minor\": " + beacon.getMinor() + ", \"namespace\": \"" + beacon.getNamespace() + "\", \"instance\": \"" + beacon.getInstanceID() + "\"}";
               action = "javascript:proximiio.foundBeacon(" + json + ")";
@@ -229,7 +239,17 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
           public void run() {
             String action;
             if (registered) {
-              action = "javascript:proximiio.lostBeacon(" + beacon.getInput().getJSON().toString() + ")";
+              JSONObject json = null;
+              try {
+                json = new JSONObject(beacon.getInput().getJSON());
+                json.put("accuracy", beacon.getAccuracy());
+              } catch (JSONException e) {
+                e.printStackTrace();
+              }
+
+              if (json != null) {
+                action = "javascript:proximiio.lostBeacon(" + json.toString() + ")";
+              }
             } else {
               String json = "{\"name\": \"Unknown Beacon\", \"accuracy\": "+ beacon.getAccuracy() + ",\"uuid\": \"" + beacon.getUUID() +"\", \"major\": " + beacon.getMajor() + ", \"minor\": " + beacon.getMinor() + ", \"namespace\": \"" + beacon.getNamespace() + "\", \"instance\": \"" + beacon.getInstanceID() + "\"}";
               action = "javascript:proximiio.lostBeacon(" + json + ")";
