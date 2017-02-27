@@ -209,7 +209,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
         activity.runOnUiThread(new Runnable() {
           @Override
           public void run() {
-            String action;            
+            String action = "";            
             if (registered) {
               JSONObject json = null;
               try {
@@ -237,7 +237,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
         activity.runOnUiThread(new Runnable() {
           @Override
           public void run() {
-            String action;
+            String action = "";
             if (registered) {
               JSONObject json = null;
               try {
