@@ -31,6 +31,11 @@ function initProximiio() {
 	proximiio.setToken(PROXIMIIO_TOKEN);
 	proximiio.setDebugOutput(true, null, null);
 
+	proximiio.setProximiioReadyCallback(function (visitorId) {
+	  document.getElementById('visitor').innerHTML = visitorId;
+	  proximiio.requestPermissions();
+	});
+	
 	proximiio.setOutputTriggerCallback(function (output) {
 	  // Your code here
 	});
