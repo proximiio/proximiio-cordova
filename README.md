@@ -28,7 +28,6 @@ platformReady callbacks
 var PROXIMIIO_TOKEN = 'PUT_YOUR_APPLCIATION_TOKEN_HERE';
 
 function initProximiio() {
-	proximiio.setToken(PROXIMIIO_TOKEN);
 	proximiio.setDebugOutput(true, null, null);
 
 	proximiio.setProximiioReadyCallback(function (visitorId) {
@@ -50,6 +49,9 @@ function initProximiio() {
 	  //document.getElementById("position-longitude").innerHTML = coords.coordinates.lon;
 	  //document.getElementById("position-accuracy").innerHTML = coords.accuracy;
 	});
+	
+	// call this method after hooking up your callbacks
+	proximiio.setToken(PROXIMIIO_TOKEN);
 },
 ```
 
