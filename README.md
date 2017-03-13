@@ -184,6 +184,9 @@ sets Proximi.io SDK to handle output Push messages automatically
   proximiio.handlePush(true);
 ```
 
+## requestPermissions
+uses internal proximi.io method for requesting permissions (location & bluetooth)
+
 ## errorCallback   
 
 ```javascript
