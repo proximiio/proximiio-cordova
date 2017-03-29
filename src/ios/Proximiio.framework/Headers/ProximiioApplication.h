@@ -23,6 +23,9 @@
 @property BOOL usesNetworkInterval;
 @property int networkInterval;
 @property int nativeActivationThreshold;
+@property NSString *indoorAtlasApiKey;
+@property NSString *indoorAtlasApiSecret;
+    
 
 + (ProximiioApplication *)applicationFromJSON:(NSDictionary *)json;
 

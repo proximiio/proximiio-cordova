@@ -5,6 +5,8 @@ var ACTION_SET_TOKEN = 'setToken';
 var ACTION_ENABLE_DEBUG = 'enableDebug';
 var ACTION_HANDLE_PUSH = 'handlePush';
 var ACTION_REQUEST_PERMISSIONS = 'requestPermissions';
+var ACTION_START_SCANNING = "startScanning";
+var ACTION_STOP_SCANNING = "stopScanning";
 
 var dummy = function (obj) {
   //console.log('proximi.io default callback:' + JSON.stringify(obj));
@@ -94,6 +96,12 @@ module.exports = {
 
   // ACTIONS
 
+  /** 
+   * Requests Location & Bluetooth Permissions using Proximi.io SDK 
+   * @param successCallback {Function}
+   * @param failureCallback {Function}
+   * @returns
+   */  
   requestPermissions: function(onSuccess, onError) {
     cordova.exec(onSuccess, onError, PLUGIN, ACTION_REQUEST_PERMISSIONS, []);
   },
@@ -110,6 +118,29 @@ module.exports = {
     initialized = true;
     token = authToken;
     cordova.exec(onSuccess, onError, PLUGIN, ACTION_SET_TOKEN, [authToken]);
+  },
+
+  /** 
+     * Start Proximi.io location scanners
+     * Use only if you previously stopped scanning using stopScanning methods as
+     * proximi.io sdk starts scanning automatically after authentication
+     * 
+     * @param successCallback {Function}
+     * @param failureCallback {Function}
+     * @returns
+     */  
+  startScanning: function(onSuccess, onError) {
+    cordova.exec(onSuccess, onError, PLUGIN, ACTION_START_SCANNING, []);
+  },
+
+  /** 
+     * Stops Proximi.io location scanners
+     * @param successCallback {Function}
+     * @param failureCallback {Function}
+     * @returns
+     */  
+  stopScanning: function(onSuccess, onError) {
+    cordova.exec(onSuccess, onError, PLUGIN, ACTION_STOP_SCANNING, []);
   },
 
   /**

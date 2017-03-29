@@ -16,6 +16,8 @@
 - (void)enableDebug:(CDVInvokedUrlCommand*)command;
 - (void)handlePush:(CDVInvokedUrlCommand*)command;
 - (void)requestPermissions:(CDVInvokedUrlCommand*)command;
+- (void)startScanning:(CDVInvokedUrlCommand*)command;
+- (void)stopScanning:(CDVInvokedUrlCommand*)command;
 
 @end
 
@@ -48,6 +50,20 @@
     NSString* callbackId    = [command callbackId];
     NSString* enableString  = [[command arguments] objectAtIndex:0];
     _mEnableDebug = [enableString isEqualToString:@"true"];
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
+}
+
+- (void)startScanning:(CDVInvokedUrlCommand*)command {
+    NSString* callbackId    = [command callbackId];
+    [[Proximiio sharedInstance] startScanning];
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
+}
+
+- (void)stopScanning:(CDVInvokedUrlCommand*)command {
+    NSString* callbackId    = [command callbackId];
+    [[Proximiio sharedInstance] stopScanning];
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
 }

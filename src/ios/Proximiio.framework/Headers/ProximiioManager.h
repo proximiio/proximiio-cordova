@@ -187,6 +187,7 @@ indoorAtlasApiKeySecret:(NSString*)iaApiKeySecret
 - (void)deleteGeofence:(NSString *)uuid withCallback:(void (^)(BOOL success, NSError* error))callback;
 - (void)deleteInput:(NSString *)uuid withCallback:(void (^)(BOOL success, NSError* error))callback;
 
+- (ProximiioApplication *)application;
 
 @property (readonly) BOOL authenticated;
 @property (readonly) BOOL remoteMode;
@@ -194,9 +195,8 @@ indoorAtlasApiKeySecret:(NSString*)iaApiKeySecret
 @property (readonly) ProximiioState state;
 @property (readonly, strong) ProximiioLocation *lastLocation;
 @property (readonly, strong) NSString *visitorId;
-
 @property (weak) id delegate;
-@property (nonatomic, strong) ProximiioApplication *application;
+
 
 
 @end
