@@ -3,31 +3,29 @@ package com.navtureapps.cordovaplugin;
 import org.apache.cordova.*;
 import org.json.JSONException;
 
-import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 import android.app.Activity;
 import android.util.Log;
 import android.content.Intent;
 import java.lang.Runnable;
-import java.util.ArrayList;
 import org.json.JSONObject;
 import android.support.annotation.Nullable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
-import javax.security.auth.callback.Callback;
-import io.proximi.proximiiolibrary.Proximiio;
-import io.proximi.proximiiolibrary.ProximiioBeacon;
-import io.proximi.proximiiolibrary.ProximiioFactory;
+import io.proximi.proximiiolibrary.ProximiioAPI;
+import io.proximi.proximiiolibrary.ProximiioBLEDevice;
+import io.proximi.proximiiolibrary.ProximiioEddystone;
 import io.proximi.proximiiolibrary.ProximiioGeofence;
+import io.proximi.proximiiolibrary.ProximiioIBeacon;
+import io.proximi.proximiiolibrary.ProximiioInput;
 import io.proximi.proximiiolibrary.ProximiioListener;
-import javafx.scene.web.WebView;
 import io.proximi.proximiiolibrary.ProximiioFloor;
 import android.Manifest;
 import android.os.Build;
 import android.content.pm.PackageManager;
 
 public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissionsResultCallback {
-  private Proximiio proximiio;
+  private ProximiioAPI proximiio;
   private ProximiioListener listener;
   private String id;
   private String token;
@@ -71,11 +69,11 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
       }
     } else if (action.equals(ACTION_STOP_SCANNING)) {
       if (proximiio != null) {
-        proximiio.destroy();
+        proximiio.destroy(false);
       }
     } else if (action.equals(ACTION_REQUEST_PERMISSIONS)) {
       if (proximiio != null) {
-        proximiio.checkPermissions();
+        // proximiio.checkPermissions(); Obsolete in Android Proximiio.SDK 2.5
       }
     }
     PluginResult r = new PluginResult(PluginResult.Status.OK);          
@@ -84,7 +82,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
   }
 
   private void initProximiio() {
-    proximiio = ProximiioFactory.getProximiio(activity);
+    proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity);
     listener = new ProximiioListener() {
       @Override
       public void geofenceEnter(final ProximiioGeofence geofence) {
@@ -203,8 +201,20 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
         });
       }
 
+      private String getJSONForBLEDevice(ProximiioBLEDevice beacon) {
+        String json = "{}";
+        if (beacon.getType() == ProximiioInput.InputType.IBEACON) {
+          ProximiioIBeacon iBeacon = (ProximiioIBeacon)beacon;
+          json = "{\"name\": \"Unknown Beacon\", \"accuracy\": "+ beacon.getDistance() + ",\"uuid\": \"" + iBeacon.getUUID() +"\", \"major\": " + iBeacon.getMajor() + ", \"minor\": " + iBeacon.getMinor() + "}";
+        } else if (beacon.getType() == ProximiioInput.InputType.EDDYSTONE) {
+          ProximiioEddystone eddystone = (ProximiioEddystone) beacon;
+          json = "{\"name\": \"Unknown Beacon\", \"accuracy\": "+ beacon.getDistance() +  ", \"namespace\": \"" + eddystone.getNamespace() + "\", \"instance\": \"" + eddystone.getInstanceID() + "\"}";
+        }
+        return json;
+      }
+
       @Override
-      public void foundBeacon(final ProximiioBeacon beacon, final boolean registered) {
+      public void foundDevice(final ProximiioBLEDevice beacon, final boolean registered) {
         activity.runOnUiThread(new Runnable() {
           @Override
           public void run() {
@@ -213,7 +223,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
               JSONObject json = null;
               try {
                 json = new JSONObject(beacon.getInput().getJSON());
-                json.put("accuracy", beacon.getAccuracy());
+                json.put("accuracy", beacon.getDistance());
               } catch (JSONException e) {
                 e.printStackTrace();
               }
@@ -222,8 +232,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
                 action = "javascript:proximiio.foundBeacon(" + json.toString() + ")";
               }
             } else {
-              String json = "{\"name\": \"Unknown Beacon\", \"accuracy\": "+ beacon.getAccuracy() + ",\"uuid\": \"" + beacon.getUUID() +"\", \"major\": " + beacon.getMajor() + ", \"minor\": " + beacon.getMinor() + ", \"namespace\": \"" + beacon.getNamespace() + "\", \"instance\": \"" + beacon.getInstanceID() + "\"}";
-              action = "javascript:proximiio.foundBeacon(" + json + ")";
+              action = "javascript:proximiio.foundBeacon(" + getJSONForBLEDevice(beacon) + ")";
             }
             log("foundBeacon", action);
             loadUrl(action);
@@ -232,7 +241,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
       }
 
       @Override
-      public void lostBeacon(final ProximiioBeacon beacon, final boolean registered) {
+      public void lostDevice(final ProximiioBLEDevice beacon, final boolean registered) {
         activity.runOnUiThread(new Runnable() {
           @Override
           public void run() {
@@ -241,7 +250,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
               JSONObject json = null;
               try {
                 json = new JSONObject(beacon.getInput().getJSON());
-                json.put("accuracy", beacon.getAccuracy());
+                json.put("accuracy", beacon.getDistance());
               } catch (JSONException e) {
                 e.printStackTrace();
               }
@@ -250,8 +259,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
                 action = "javascript:proximiio.lostBeacon(" + json.toString() + ")";
               }
             } else {
-              String json = "{\"name\": \"Unknown Beacon\", \"accuracy\": "+ beacon.getAccuracy() + ",\"uuid\": \"" + beacon.getUUID() +"\", \"major\": " + beacon.getMajor() + ", \"minor\": " + beacon.getMinor() + ", \"namespace\": \"" + beacon.getNamespace() + "\", \"instance\": \"" + beacon.getInstanceID() + "\"}";
-              action = "javascript:proximiio.lostBeacon(" + json + ")";
+              action = "javascript:proximiio.lostBeacon(" + getJSONForBLEDevice(beacon) + ")";
             }
             log("lostBeacon", action);
             loadUrl(action);
@@ -260,7 +268,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
       }
     };
 
-    proximiio.addListener(listener);
+    proximiio.setListener(listener);
     proximiio.setAuth(token);
   }
 
