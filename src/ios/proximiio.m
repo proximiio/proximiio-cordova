@@ -56,14 +56,14 @@
 
 - (void)startScanning:(CDVInvokedUrlCommand*)command {
     NSString* callbackId    = [command callbackId];
-    [[Proximiio sharedInstance] startScanning];
+    [[Proximiio sharedInstance] startUpdating];
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
 }
 
 - (void)stopScanning:(CDVInvokedUrlCommand*)command {
     NSString* callbackId    = [command callbackId];
-    [[Proximiio sharedInstance] stopScanning];
+    [[Proximiio sharedInstance] stopUpdating];
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
 }
