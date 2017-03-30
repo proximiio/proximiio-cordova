@@ -83,6 +83,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
 
   private void initProximiio() {
     proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity);
+    proximiio.setActivity(activity);
     listener = new ProximiioListener() {
       @Override
       public void geofenceEnter(final ProximiioGeofence geofence) {
