@@ -35,6 +35,7 @@
 
 - (BOOL)hasSource;
 - (BOOL)isWithinInterval:(float)interval;
+- (BOOL)isInsidePolygon:(NSArray *_Nonnull)polygon;
 - (BOOL)hasEqualCoordinatesTo:(ProximiioLocation *_Nonnull)otherLocation;
 
 -(double) bearingToLocation:(CLLocation *_Nonnull) destinationLocation;

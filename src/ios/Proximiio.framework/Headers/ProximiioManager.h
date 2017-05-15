@@ -10,8 +10,8 @@
 #import "ProximiioApplication.h"
 #import "ProximiioState.h"
 #import "ProximiioMode.h"
-#import "ProximiioLocationManagerDelegate.h"
 #import "ProximiioResourceManager.h"
+#import "ProximiioBufferSize.h"
 
 //! Project version number for Proximiio.
 FOUNDATION_EXPORT double ProximiioVersionNumber;
@@ -21,12 +21,13 @@ FOUNDATION_EXPORT const unsigned char ProximiioVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Proximiio/PublicHeader.h>
 
-
-@interface ProximiioManager : NSObject <ProximiioLocationManagerDelegate>
+@interface ProximiioManager : NSObject
 
 + (ProximiioManager *)sharedManager;
 - (void)requestPermissions;
 
+- (void)enable;
+- (void)disable;
 - (void)startUpdating;
 - (void)stopUpdating;
 - (void)extendBackgroundTime;
@@ -38,14 +39,24 @@ FOUNDATION_EXPORT const unsigned char ProximiioVersionString[];
 - (void)authWithEmail:(NSString *)email password:(NSString *)password callback:(void (^)(ProximiioState result))callback;
 
 - (void)setMode:(ProximiioMode)mode;
-
+- (void)setBufferSize:(ProximiioBufferSize)bufferSize;
 - (void)setUpdateInterval:(double)updateInterval;
 
 - (void)handlePush:(NSString *)title;
 - (void)handleOutput:(NSObject *)payload;
 - (void)selectApplication:(NSString *)uuid;
 
+-(NSArray *)places;
+-(NSArray *)floors;
+-(NSArray *)departments;
+-(NSArray *)geofences;
+-(NSArray *)applications;
+
+- (NSArray *)geofencesForLocation:(ProximiioLocation *)location;
+
 - (void)addCustomiBeaconUUID:(NSString *)uuid;
+
+- (void)proximiioFloorChanged:(ProximiioFloor *)floor;
 
 - (BOOL)addPlace:(NSString *)name
         location:(CLLocationCoordinate2D)location
@@ -55,7 +66,6 @@ indoorAtlasVenueID:(NSString *)indoorAtlasVenueId
     withCallback:(void (^)(BOOL success, NSError* error))callback;
 
 - (BOOL)addFloor:(NSString*)name
-         floorID:(NSString*)floorID
      floorPlanID:(NSString*)floorPlanID
            place:(ProximiioPlace*)place
      floorNumber:(NSNumber*)floorNumber
@@ -114,7 +124,6 @@ indoorAtlasApiKeySecret:(NSString*)iaApiKeySecret
 
 - (BOOL)updateFloor:(NSString*)ID
                name:(NSString*)name
-            floorID:(NSString*)floorID
         floorPlanID:(NSString*)floorPlanID
               place:(ProximiioPlace*)place
         floorNumber:(NSNumber*)floorNumber

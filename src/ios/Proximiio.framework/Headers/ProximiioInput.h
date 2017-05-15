@@ -9,9 +9,9 @@
 #import "ProximiioResource.h"
 #import "ProximiioLocation.h"
 #import "ProximiioBeacon.h"
-#import "ProximiioKalmanFilter.h"
 #import "ProximiioInputType.h"
 #import "ProximiioDepartment.h"
+#import "ProximiioFloor.h"
 
 @interface ProximiioInput : ProximiioResource
 
@@ -20,6 +20,10 @@
 
 - (void)updateAccuracyWithBeacon:(ProximiioBeacon *)beacon;
 + (ProximiioInput *)inputFromJSON:(NSDictionary *)json;
+- (ProximiioDepartment *)department;
+- (ProximiioFloor *)floor;
+- (int)level;
+
 
 @property ProximiioInputType type;
 @property BOOL triggerFloorChange;
@@ -34,6 +38,5 @@
 @property (nonatomic, strong) NSString *placeId;
 @property (nonatomic, strong) ProximiioLocation *location;
 @property (nonatomic, strong) ProximiioDepartment *department;
-@property (nonatomic, strong) ProximiioKalmanFilter *filter;
 
 @end

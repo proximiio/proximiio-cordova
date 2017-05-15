@@ -15,8 +15,18 @@
 - (void)setCurrentLocation:(CLLocation *)location title:(NSString *)title;
 - (void)addMarker:(CLLocation *)location html:(NSString *)html options:(NSDictionary *)options;
 - (void)addIcon:(NSDictionary *)options;
+
+- (void)addCircle:(NSString *)identifier
+         location:(CLLocation *)location
+           radius:(int)radius
+            color:(NSString *)color
+        fillColor:(NSString *)fillColor
+          opacity:(float)opacity
+            title:(NSString *)title;
+
 - (void)addFloorPlan:(NSDictionary *)floorPlan;
 - (void)setLocationTracking:(BOOL)enabled;
+- (void)setView:(CLLocation *)location;
 - (void)setView:(CLLocation *)location zoom:(int)zoom;
 - (void)runCommand:(NSString *)command;
 - (void)rlog:(NSString *)message;
