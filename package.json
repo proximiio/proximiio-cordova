@@ -1,0 +1,24 @@
+{
+  "name": "proximiio-cordova",
+  "version": "0.6.0",
+  "description": "# Introduction",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/proximiio/proximiio-cordova.git"
+  },
+  "keywords": [
+    "proximiio",
+    "cordova",
+    "plugin"
+  ],
+  "author": "Proximi.io",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/proximiio/proximiio-cordova/issues"
+  },
+  "homepage": "https://github.com/proximiio/proximiio-cordova#readme"
+}

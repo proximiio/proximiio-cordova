@@ -1,4 +1,13 @@
-ext.cdvMinSdkVersion = 18
+ext.cdvMinSdkVersion = 14
+
+ext.postBuildExtras = {
+    android {
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+    }
+}
 
 repositories {
     jcenter()
@@ -14,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compile 'io.proximi.proximiiolibrary:proximiiolibrary:2.5.+'
+    compile 'io.proximi.proximiiolibrary:proximiiolibrary:2.6.+'
 }
 
 android {
@@ -22,8 +31,5 @@ android {
     exclude 'META-INF/LICENSE'
     exclude 'META-INF/LICENSE-FIREBASE.txt'
     exclude 'META-INF/NOTICE'
-    exclude 'lib/arm64-v8a/libcpaJNI.so'
-    exclude 'lib/x86/libsqlcipher.so'
-    exclude 'lib/x86_64/libcpaJNI.so'
   }
 }
