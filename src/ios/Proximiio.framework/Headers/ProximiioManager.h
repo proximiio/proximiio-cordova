@@ -12,6 +12,7 @@
 #import "ProximiioMode.h"
 #import "ProximiioResourceManager.h"
 #import "ProximiioBufferSize.h"
+#import <CoreBluetooth/CoreBluetooth.h>
 
 //! Project version number for Proximiio.
 FOUNDATION_EXPORT double ProximiioVersionNumber;
@@ -46,11 +47,13 @@ FOUNDATION_EXPORT const unsigned char ProximiioVersionString[];
 - (void)handleOutput:(NSObject *)payload;
 - (void)selectApplication:(NSString *)uuid;
 
--(NSArray *)places;
--(NSArray *)floors;
--(NSArray *)departments;
--(NSArray *)geofences;
--(NSArray *)applications;
+- (CBManagerState)btState;
+
+- (NSArray *)places;
+- (NSArray *)floors;
+- (NSArray *)departments;
+- (NSArray *)geofences;
+- (NSArray *)applications;
 
 - (NSArray *)geofencesForLocation:(ProximiioLocation *)location;
 

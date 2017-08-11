@@ -19,9 +19,9 @@
 #import <Proximiio/ProximiioResourceManager.h>
 #import <Proximiio/ProximiioInputType.h>
 #import <Proximiio/ProximiioCustomLocation.h>
-#import <Proximiio/ProximiioMapView.h>
 #import <Proximiio/ProximiioBufferSize.h>
 #import <Proximiio/ProximiioManager.h>
+
 
 //! Project version number for Proximiio.
 FOUNDATION_EXPORT double ProximiioVersionNumber;
@@ -52,6 +52,7 @@ FOUNDATION_EXPORT const unsigned char ProximiioVersionString[];
 - (void)enable;
 - (void)disable;
 + (id)sharedInstance;
+- (CBManagerState)btState;
 
 @property (weak) id delegate;
 @property (nonatomic) id instance;
@@ -235,7 +236,7 @@ indoorAtlasApiKeySecret:(NSString*)iaApiKeySecret
 - (void)onProximiioReady;
 - (void)onProximiioAuthorizationInvalid;
 - (void)onProximiioAuthorizationFailure;
-
+- (void)proximiioCentralManagerDidUpdateState;
 - (void)proximiioUpdatedApplications;
 - (void)proximiioUpdatedDepartments;
 - (void)proximiioUpdatedFloors;
