@@ -248,7 +248,16 @@
 }
 
 - (void)runJavascript:(NSString *)command {
-    [[self webView] performSelectorOnMainThread:@selector(stringByEvaluatingJavaScriptFromString:) withObject:command waitUntilDone:NO];
+    if ([self.webView isKindOfClass:UIWebView.class]) {
+        [[self webView] performSelectorOnMainThread:@selector(stringByEvaluatingJavaScriptFromString:) withObject:command waitUntilDone:NO];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            WKWebView *webView = (WKWebView *)self.webView;
+            [webView evaluateJavaScript:command completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+                if (error) { NSLog(@"[ProximiioSDK] Javascript error: %@", error); }
+            }];
+        });
+    }
 }
 
 -(NSString*)toJSON:(NSDictionary *)data {

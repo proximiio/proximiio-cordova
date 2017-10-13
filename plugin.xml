@@ -22,6 +22,10 @@
             <string>Configure this string in the plist!</string>
         </config-file>
 
+        <config-file target="*-Info.plist" parent="NSLocationAlwaysAndWhenInUseUsageDescription">
+            <string>Configure this string in the plist!</string>
+        </config-file>
+
         <config-file target="*-Info.plist" parent="UIBackgroundModes">
                 <key>UIBackgroundModes</key>
                     <array>
