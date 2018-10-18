@@ -3,6 +3,7 @@
 #import <Cordova/CDV.h>
 
 #import <Proximiio/Proximiio.h>
+@import WebKit;
 
 @interface proximiio : CDVPlugin <ProximiioDelegate> {
     // Member variables go here.

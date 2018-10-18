@@ -31,12 +31,11 @@
                     <array>
                     <string>location</string>
                 </array>
-        </config-file>         
+        </config-file>
 
         <source-file src="src/ios/proximiio.m" />
-        
+
         <framework src="src/ios/Proximiio.framework" custom="true" embed="true"/>
-        <hook type="after_platform_add" src="hooks/addEmbedded.js" />
         <framework src="CoreLocation.framework" />
         <framework src="CoreBluetooth.framework" />
         <framework src="SystemConfiguration.framework" />
@@ -66,7 +65,7 @@
 
         <framework src="com.android.support:support-v4:25.3.1"/>
         <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
-        
+
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <receiver android:name="com.navtureapps.cordovaplugin.ProximiioCordovaOutputReceiver"  android:exported="false">
                 <intent-filter>
