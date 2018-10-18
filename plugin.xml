@@ -34,8 +34,6 @@
         </config-file>
 
         <source-file src="src/ios/proximiio.m" />
-
-        <framework src="src/ios/Proximiio.framework" custom="true" embed="true"/>
         <framework src="CoreLocation.framework" />
         <framework src="CoreBluetooth.framework" />
         <framework src="SystemConfiguration.framework" />
@@ -45,7 +43,7 @@
         <framework src="libicucore.dylib" />
         <framework src="libz.dylib" />
         <framework src="libc++.dylib" />
-        <framework src="Proximiio" type="podspec" spec="~> 1.1.8" />
+        <framework src="Proximiio" type="podspec" spec="~> 1.1.51" />
     </platform>
 
     <platform name="android">
