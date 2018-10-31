@@ -19,6 +19,7 @@ import io.proximi.proximiiolibrary.ProximiioIBeacon;
 import io.proximi.proximiiolibrary.ProximiioInput;
 import io.proximi.proximiiolibrary.ProximiioListener;
 import io.proximi.proximiiolibrary.ProximiioFloor;
+import io.proximi.proximiiolibrary.ProximiioOptions;
 import android.Manifest;
 import android.os.Build;
 import android.content.pm.PackageManager;
@@ -30,7 +31,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
     private boolean enableDebug;
     private Activity activity;
     private CallbackContext context;
-    
+
     private static final String TAG = "ProximiioCordova";
 
     private static final String ACTION_SET_TOKEN = "setToken";
@@ -78,13 +79,16 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
                 }
                 break;
         }
-        PluginResult r = new PluginResult(PluginResult.Status.OK);            
+        PluginResult r = new PluginResult(PluginResult.Status.OK);
         context.sendPluginResult(r);
         return true;
     }
 
     private void initProximiio() {
-        proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity);
+        ProximiioOptions options = new ProximiioOptions()
+            .setNotificationMode(ProximiioOptions.NotificationMode.ENABLED);
+
+        proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity, options);
         proximiio.setActivity(activity);
         listener = new ProximiioListener() {
             @Override
@@ -117,7 +121,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
                 loadUrl(action);
             }
 
-            @Override
+            // @Override
             public void loggedIn(boolean online) {
                 String action = "javascript:proximiio.proximiioReady(\"" + proximiio.getVisitorID() + "\")";
                 log("initProximiio", action);
@@ -147,7 +151,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
 
             @Override
             public void foundDevice(ProximiioBLEDevice beacon, boolean registered) {
-                String action = null;            
+                String action = null;
                 if (registered) {
                     try {
                         JSONObject json = new JSONObject(beacon.getInput().getJSON());
@@ -198,8 +202,9 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
 
         proximiio.setListener(listener);
         proximiio.setAuth(token);
+        proximiio.onStart();
     }
-    
+
     @Nullable
     private String getJSONForBLEDevice(ProximiioBLEDevice beacon) {
         String json = null;
@@ -233,11 +238,12 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
             initProximiio();
         }
     }
-    
+
     @Override
     public void onStop() {
         super.onStop();
         if (proximiio != null) {
+            proximiio.onStop();
             proximiio.destroy();
             proximiio = null;
         }
