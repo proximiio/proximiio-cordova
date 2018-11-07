@@ -121,8 +121,8 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
                 loadUrl(action);
             }
 
-            // @Override
-            public void loggedIn(boolean online) {
+            @Override
+            public void loggedIn(boolean online, String authKey) {
                 String action = "javascript:proximiio.proximiioReady(\"" + proximiio.getVisitorID() + "\")";
                 log("initProximiio", action);
                 loadUrl(action);
