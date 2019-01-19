@@ -16,7 +16,7 @@ Cordova plugin installation is really easy. Issue the following command in your 
 
 In case you're using Ionic, the installation is similar:
 
-<code>ionic plugin add https://github.com/proximiio/proximiio-cordova.git</code>
+<code>ionic cordova plugin add https://github.com/proximiio/proximiio-cordova.git</code>
 
 ## Basic usage
 
