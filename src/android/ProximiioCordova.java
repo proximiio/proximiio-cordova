@@ -9,13 +9,11 @@ import android.content.Intent;
 import java.lang.Runnable;
 import org.json.JSONObject;
 
-import android.androidx.annotation.Nullable; 
-import android.androidx.annotation.NonNull; 
 
+import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback;
 
-import android.support.annotation.Nullable;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import io.proximi.proximiiolibrary.ProximiioAPI;
 import io.proximi.proximiiolibrary.ProximiioBLEDevice;
 import io.proximi.proximiiolibrary.ProximiioEddystone;
@@ -206,7 +204,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
         };
 
         proximiio.setListener(listener);
-        proximiio.setAuth(token);
+        proximiio.setAuth(token, false);
         proximiio.onStart();
     }
 
@@ -223,7 +221,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
                 json = "{\"name\": \"Unknown Eddystone\", \"accuracy\": " + beacon.getDistance() + ", \"namespace\": \"" + eddystone.getNamespace() + "\", \"instance\": \"" + eddystone.getInstanceID() + "\"}";
                 break;
             case GENERIC_BLE:
-                json = "{\"name\": \"Unknown Device\", \"accuracy\": " + beacon.getDistance() + ", \"mac\": \"" + beacon.getMAC() + "\"}";
+                json = "{\"name\": \"Unknown Device\", \"accuracy\": " + beacon.getDistance() + ", \"mac\": \"" + beacon.getRSSI() + "\"}";
                 break;
         }
         return json;

@@ -43,3 +43,9 @@ android {
     exclude 'META-INF/NOTICE'
   }
 }
+
+configurations {
+all {
+        exclude module:'gson'
+    }
+}
