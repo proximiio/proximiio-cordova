@@ -1,4 +1,4 @@
-# Proximi.io Cordova Plugin #
+# (Fluxguide Fork) Proximi.io Cordova Plugin  #
 
 # Introduction
 
