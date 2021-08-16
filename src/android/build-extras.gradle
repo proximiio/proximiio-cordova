@@ -1,4 +1,4 @@
-ext.cdvMinSdkVersion = 14
+ext.cdvMinSdkVersion = 22
 
 ext.postBuildExtras = {
     android {
@@ -22,7 +22,7 @@ repositories {
         dirs 'libs'
     }
     maven {
-        url "http://proximi-io.bintray.com/proximiio-android"
+        url "https://maven.proximi.io/repository/android-releases/"
     }
     maven {
         url "http://indooratlas-ltd.bintray.com/mvn-public"
@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.proximi.proximiiolibrary:proximiiolibrary:2.7.6'
+    implementation 'io.proximi.library:core:5.1.+'
 }
 
 android {
