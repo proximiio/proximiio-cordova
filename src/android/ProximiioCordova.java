@@ -89,7 +89,13 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
 
     private void initProximiio() {
         ProximiioOptions options = new ProximiioOptions()
-            .setNotificationMode(ProximiioOptions.NotificationMode.ENABLED);
+            .setNotificationMode(ProximiioOptions.NotificationMode.DISABLED);
+
+        /*
+        // Proximi Notificationmode Enabled -> App will use Background-Activity
+        ProximiioOptions options = new ProximiioOptions()
+                .setNotificationMode(ProximiioOptions.NotificationMode.ENABLED);
+        */
 
         proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity, options);
         proximiio.setActivity(activity);
