@@ -43,7 +43,8 @@
         <framework src="libicucore.dylib" />
         <framework src="libz.dylib" />
         <framework src="libc++.dylib" />
-        <framework src="Proximiio" type="podspec" spec="~> 1.1.51" />
+        <framework src="Proximiio" type="podspec" spec="~> 1.1.51"/>
+        <!-- <podspec src="Proximiio" type="podspec" spec="~> 1.1.51"/> -->
     </platform>
 
     <platform name="android">
