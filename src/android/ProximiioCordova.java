@@ -111,7 +111,7 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
             @Override
             public void changedFloor(@Nullable ProximiioFloor floor) {
                 String floorJson = floor != null ? floor.getJSON() : "{}";
-                String action = "javascript:proximiio.changedFloor(0, " + floorJson + ")";
+                String action = "javascript:proximiio.changedFloor(" + floorJson + ")";
                 log("changedFloor", action);
                 loadUrl(action);
             }
