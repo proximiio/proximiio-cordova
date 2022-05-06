@@ -2,7 +2,9 @@
 
 #import <Cordova/CDV.h>
 
-#import <Proximiio/Proximiio.h>
+@import Proximiio;
+@import ProximiioProcessor;
+
 @import WebKit;
 
 @interface proximiio : CDVPlugin <ProximiioDelegate> {
@@ -11,6 +13,8 @@
 
 @property (readwrite, assign) BOOL mEnableDebug;
 @property (readwrite, assign) BOOL mHandlePush;
+// Add PDR Processor
+@property (readwrite, strong) ProximiioPDRProcessor *pdr;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
 - (void)setToken:(CDVInvokedUrlCommand*)command;
@@ -27,24 +31,46 @@
 // ACTIONS
 
 - (void)setToken:(CDVInvokedUrlCommand*)command {
-    NSString* callbackId    = [command callbackId];
-    NSString* authToken     = [[command arguments] objectAtIndex:0];
-    [[self commandDelegate] runInBackground:^{
-        Proximiio *proximiio = (Proximiio *)[Proximiio sharedInstance];
-        proximiio.delegate = self;
-        [proximiio authWithToken:authToken callback:^(ProximiioState resultState) {
-            CDVPluginResult* result;
-            if (resultState == kProximiioReady) {
-                NSString *action = [NSString stringWithFormat:@"proximiio.proximiioReady(\"%@\");", proximiio.visitorId];
-                [self runJavascript:action];
-                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-            } else {
-                [self runJavascript:@"proximiio.proximiioReady(null);"];
-                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Proximi.io Authorization Failed"];
-            }
-            [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
+    
+        NSString* callbackId    = [command callbackId];
+        NSString* authToken     = [[command arguments] objectAtIndex:0];
+        [[self commandDelegate] runInBackground:^{
+
+            // Dispatch in background thread! Very important!
+            dispatch_sync(dispatch_get_main_queue(),^ {
+                Proximiio *proximiio = (Proximiio *)[Proximiio sharedInstance];
+                proximiio.delegate = self;
+                // Set buffer size explicitely to mini
+                [proximiio setBufferSize:kProximiioBufferMini];
+                // Allocate PDR
+                self->_pdr = [[ProximiioPDRProcessor alloc] init];
+                // Set PDR threshold
+                self->_pdr.threshold = 4;
+                // Add PDR to proximi
+                [ProximiioLocationManager.sharedManager addProcessor:self->_pdr avoidDuplicates:YES];
+                [proximiio authWithToken:authToken callback:^(ProximiioState resultState) {
+                    __block CDVPluginResult* result;
+                    if (resultState == kProximiioReady) {
+                        
+                        [proximiio sync:^(BOOL completed) {
+
+                            // Start the positioning process
+                            [proximiio enable];
+                            [proximiio startUpdating];
+                            
+                            NSString *action = [NSString stringWithFormat:@"proximiio.proximiioReady(\"%@\");", proximiio.visitorId];
+                            [self runJavascript:action];
+                            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+                        }];
+                        
+                    } else {
+                        [self runJavascript:@"proximiio.proximiioReady(null);"];
+                        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Proximi.io Authorization Failed"];
+                    }
+                    [[self commandDelegate] sendPluginResult:result callbackId:callbackId];
+                }];
+            });
         }];
-    }];
 }
 
 - (void)enableDebug:(CDVInvokedUrlCommand*)command {
@@ -166,17 +192,20 @@
     [self runJavascript:action];
 }
 
-- (void)proximiioPositionUpdated:(CLLocation *)location {
-    NSDictionary *position = @{
-                               @"coordinates": @{
-                                       @"lat": @(location.coordinate.latitude),
-                                       @"lon": @(location.coordinate.longitude)
-                                       },
-                               @"accuracy": @(location.horizontalAccuracy)
-                               };
-    NSString *action = [NSString stringWithFormat:@"proximiio.updatedPosition(%@);", [self toJSON:position]];
-    [self log:@"proximiioPositionUpdated" action:action];
-    [self runJavascript:action];
+- (void)proximiioPositionUpdated:(ProximiioLocation *)location {
+    // Only listen to location updates with a location
+    if(location != nil) {
+        NSDictionary *position = @{
+                                   @"coordinates": @{
+                                           @"lat": @(location.coordinate.latitude),
+                                           @"lon": @(location.coordinate.longitude)
+                                           },
+                                   @"accuracy": @(location.horizontalAccuracy)
+                                   };
+         NSString *action = [NSString stringWithFormat:@"proximiio.updatedPosition(%@);", [self toJSON:position]];
+        [self log:@"proximiioPositionUpdated" action:action];
+        [self runJavascript:action];
+    }
 }
 
 - (void)proximiio:(Proximiio *)proximiio encounteredError:(NSError*)error {

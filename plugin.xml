@@ -43,7 +43,8 @@
         <framework src="libicucore.dylib" />
         <framework src="libz.dylib" />
         <framework src="libc++.dylib" />
-        <framework src="Proximiio" type="podspec" spec="~> 1.1.51"/>
+        <framework src="Proximiio" type="podspec" spec="~> 5.2.19"/>
+        <framework src="ProximiioProcessor" type="podspec" spec="~> 0.7.0"/>
         <!-- <podspec src="Proximiio" type="podspec" spec="~> 1.1.51"/> -->
     </platform>
 
