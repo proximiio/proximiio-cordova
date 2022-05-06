@@ -1,4 +1,4 @@
-# (Fluxguide Fork) Proximi.io Cordova Plugin  #
+# (Fluxguide Fork) Proximi.io Cordova Plugin
 
 # Introduction
 
@@ -12,11 +12,11 @@ Code samples can be found on the right side of the page.
 
 Cordova plugin installation is really easy. Issue the following command in your Cordova project:
 
-<code>cordova plugin add https://github.com/proximiio/proximiio-cordova.git</code>
+<code>cordova plugin add https://github.com/fluxguide/proximiio-cordova.git</code>
 
 In case you're using Ionic, the installation is similar:
 
-<code>ionic plugin add https://github.com/proximiio/proximiio-cordova.git</code>
+<code>ionic plugin add https://github.com/fluxguide/proximiio-cordova.git</code>
 
 ## Basic usage
 
@@ -34,22 +34,26 @@ function initProximiio() {
 	  document.getElementById('visitor').innerHTML = visitorId;
 	  proximiio.requestPermissions();
 	});
-	
+
 	proximiio.setOutputTriggerCallback(function (output) {
-	  // Your code here
+	    // Your code here
 	});
 
 	proximiio.setInputTriggerCallback(function(enter, geofence) {
-	  // Your code here
+	    // Your code here
 	});
 
 	proximiio.setPositionChangeCallback(function(coords) {
-	  // Your code here, for example:
-	  //document.getElementById("position-latitude").innerHTML = coords.coordinates.lat;
-	  //document.getElementById("position-longitude").innerHTML = coords.coordinates.lon;
-	  //document.getElementById("position-accuracy").innerHTML = coords.accuracy;
+	    // Your code here, for example:
+	    //document.getElementById("position-latitude").innerHTML = coords.coordinates.lat;
+	    //document.getElementById("position-longitude").innerHTML = coords.coordinates.lon;
+	    //document.getElementById("position-accuracy").innerHTML = coords.accuracy;
 	});
-	
+
+    proximiio.setFloorChangedCallback(function (floor) {
+        // After floor changed
+	});
+
 	// call this method after hooking up your callbacks
 	proximiio.setToken(PROXIMIIO_TOKEN);
 },
@@ -74,9 +78,9 @@ Cordova plugin offers multiple callbacks which are triggered by different events
 proximiioReadyCallback is triggered when Proximio.io SDK is fully initialized;
 
 ```javascript
-  proximiio.setProximiioReadyCallback(function(visitorId) {
-    document.getElementById("visitor_id").innerHTML = visitorId;
-  })
+proximiio.setProximiioReadyCallback(function (visitorId) {
+  document.getElementById("visitor_id").innerHTML = visitorId;
+});
 ```
 
 ## geofenceTriggerCallback
@@ -84,22 +88,23 @@ proximiioReadyCallback is triggered when Proximio.io SDK is fully initialized;
 geofenceTriggerCallback is triggered when someone enters or exits a defined geofence.
 
 ```javascript
-proximiio.setGeofenceTriggerCallback(function(enter, geofence) {
-  document.getElementById("address").innerHTML = geofence.address                                
-	document.getElementById("lat").innerHTML = geofence.area.lat                                
-	document.getElementById("long").innerHTML = geofence.area.lng                                
-	document.getElementById("createdAt").innerHTML = geofence.createdAt                              
-	document.getElementById("department_id").innerHTML = geofence.department_id                          
-	document.getElementById("id").innerHTML = geofence.id                                     
-	document.getElementById("name").innerHTML = geofence.name                                   
-	document.getElementById("organization_id").innerHTML = geofence.organization_id                        
-	document.getElementById("place_id").innerHTML = geofence.place_id                               
-	document.getElementById("radius").innerHTML = geofence.radius                                 
-	document.getElementById("updatedAt").innerHTML = geofence.updatedAt                              
+proximiio.setGeofenceTriggerCallback(function (enter, geofence) {
+  document.getElementById("address").innerHTML = geofence.address;
+  document.getElementById("lat").innerHTML = geofence.area.lat;
+  document.getElementById("long").innerHTML = geofence.area.lng;
+  document.getElementById("createdAt").innerHTML = geofence.createdAt;
+  document.getElementById("department_id").innerHTML = geofence.department_id;
+  document.getElementById("id").innerHTML = geofence.id;
+  document.getElementById("name").innerHTML = geofence.name;
+  document.getElementById("organization_id").innerHTML =
+    geofence.organization_id;
+  document.getElementById("place_id").innerHTML = geofence.place_id;
+  document.getElementById("radius").innerHTML = geofence.radius;
+  document.getElementById("updatedAt").innerHTML = geofence.updatedAt;
 });
 ```
 
-## outputTriggerCallback  
+## outputTriggerCallback
 
 outputTriggerCallback is triggered when output payload is available. Output payload is defined in the web portal action flow editor using function node and event transmitter.
 
@@ -112,33 +117,40 @@ proximiio.setOutputTriggerCallback(function (output) {
 });
 ```
 
-## positionChangeCallback  
+## positionChangeCallback
 
 positionChangeCallback is triggered when Proximi.io SDK detects a major change in the users position.
 
 ```javascript
-proximiio.setPositionChangeCallback(function(coords) {
-	// Your code here, for example:
-	document.getElementById("position-latitude").innerHTML = coords.coordinates.lat;
-	document.getElementById("position-longitude").innerHTML = coords.coordinates.lon;
-	document.getElementById("position-accuracy").innerHTML = coords.accuracy;
+proximiio.setPositionChangeCallback(function (coords) {
+  // Your code here, for example:
+  document.getElementById("position-latitude").innerHTML =
+    coords.coordinates.lat;
+  document.getElementById("position-longitude").innerHTML =
+    coords.coordinates.lon;
+  document.getElementById("position-accuracy").innerHTML = coords.accuracy;
 });
 ```
 
-## floorChangedCallback  
+## floorChangedCallback
 
 floorChangedCallback is triggered when Proximi.io SDK detects a floor change.
 
 ```javascript
-proximiio.setFloorChangedCallback(function(floor) {
-	// Your code here, for example:
-	document.getElementById("floor-anchors").innerHTML = JSON.stringify(floor.anchors, null, 4)
-	document.getElementById("floor-createdAt").innerHTML = floor.createdAt;
-	document.getElementById("floor-id").innerHTML = floor.id;
-	document.getElementById("floor-name").innerHTML = floor.name;
-	document.getElementById("floor-organization_id").innerHTML = floor.organization_id;
-	document.getElementById("floor-.place_id").innerHTML = floor.place_id;
-	document.getElementById("floor-updatedAt").innerHTML = floor.updatedAt;
+proximiio.setFloorChangedCallback(function (floor) {
+  // Your code here, for example:
+  document.getElementById("floor-anchors").innerHTML = JSON.stringify(
+    floor.anchors,
+    null,
+    4
+  );
+  document.getElementById("floor-createdAt").innerHTML = floor.createdAt;
+  document.getElementById("floor-id").innerHTML = floor.id;
+  document.getElementById("floor-name").innerHTML = floor.name;
+  document.getElementById("floor-organization_id").innerHTML =
+    floor.organization_id;
+  document.getElementById("floor-.place_id").innerHTML = floor.place_id;
+  document.getElementById("floor-updatedAt").innerHTML = floor.updatedAt;
 });
 ```
 
@@ -147,11 +159,11 @@ proximiio.setFloorChangedCallback(function(floor) {
 beaconFoundCallback is triggered when Proximio.io SDK detects a beacon;
 
 ```javascript
-  proximiio.setBeaconFoundCallback(function(beacon) {
-    document.getElementById("beacon-uuid").innerHTML = beacon.uuid;
-  	document.getElementById("beacon-major").innerHTML = beacon.major;
-  	document.getElementById("beacon-minor").innerHTML = beacon.minor;
-  })
+proximiio.setBeaconFoundCallback(function (beacon) {
+  document.getElementById("beacon-uuid").innerHTML = beacon.uuid;
+  document.getElementById("beacon-major").innerHTML = beacon.major;
+  document.getElementById("beacon-minor").innerHTML = beacon.minor;
+});
 ```
 
 ## beaconLostCallback
@@ -159,11 +171,11 @@ beaconFoundCallback is triggered when Proximio.io SDK detects a beacon;
 beaconLostCallback is triggered when Proximio.io SDK looses beacon from sight;
 
 ```javascript
-  proximiio.setBeaconLostCallback(function(beacon) {
-    document.getElementById("beacon-uuid").innerHTML = beacon.uuid;
-  	document.getElementById("beacon-major").innerHTML = beacon.major;
-  	document.getElementById("beacon-minor").innerHTML = beacon.minor;
-  })
+proximiio.setBeaconLostCallback(function (beacon) {
+  document.getElementById("beacon-uuid").innerHTML = beacon.uuid;
+  document.getElementById("beacon-major").innerHTML = beacon.major;
+  document.getElementById("beacon-minor").innerHTML = beacon.minor;
+});
 ```
 
 ## floorChangedCallback
@@ -171,9 +183,9 @@ beaconLostCallback is triggered when Proximio.io SDK looses beacon from sight;
 floorChangedCallback is triggered when Proximio.io SDK detects a floor change;
 
 ```javascript
-  proximiio.setFloorChangedCallback(function(floor) {
-    document.getElementById("floor").innerHTML = floor;
-  })
+proximiio.setFloorChangedCallback(function (floor) {
+  document.getElementById("floor").innerHTML = floor;
+});
 ```
 
 ## Push Handling
@@ -181,13 +193,14 @@ floorChangedCallback is triggered when Proximio.io SDK detects a floor change;
 sets Proximi.io SDK to handle output Push messages automatically
 
 ```javascript
-  proximiio.handlePush(true);
+proximiio.handlePush(true);
 ```
 
 ## requestPermissions
-uses internal proximi.io method for requesting permissions (location & bluetooth)
 
-## errorCallback   
+uses internal proximi.io method for requesting permissions (notification, location & bluetooth)
+
+## errorCallback
 
 ```javascript
 // Example TBA
